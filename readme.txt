@@ -1,4 +1,4 @@
-=== RSSImport ===
+=== Search and Replace ===
 Contributors: Bueltge
 Donate link: http://bueltge.de/wunschliste/
 Tags: database, mysql, search, replace
