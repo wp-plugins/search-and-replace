@@ -13,7 +13,7 @@ A simple search for find strings in your database and replace the string. You ca
 
 "Search and Replace" Originalplugin ist von [Mark Cunningham](http://thedeadone.net/ "Mark Cunningham") and was advanced (comments and comment-author) by [Gonahkar](http://www.gonahkar.com/ "Gonahkar"). More increments by Frank Bueltge.
 
-Please visit [the official website](http://bueltge.de/wp-rss-import-plugin/55/ "JS AntiSpam") for further details and the latest information on this plugin.
+Please visit [the official website](http://bueltge.de/wp-suchen-und-ersetzen-de-plugin/114/ "JS AntiSpam") for further details and the latest information on this plugin.
 
 == Installation ==
 1. Unpack the download-package
@@ -21,7 +21,7 @@ Please visit [the official website](http://bueltge.de/wp-rss-import-plugin/55/ "
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Got to Manage -> Search/Replace
 
-See on [the official website](http://bueltge.de/wp-suchen-und-ersetzen-de-plugin/114 "Search and Replace").
+See on [the official website](http://bueltge.de/wp-suchen-und-ersetzen-de-plugin/114/ "Search and Replace").
 
 == Screenshots ==
 
@@ -31,8 +31,8 @@ See on [the official website](http://bueltge.de/wp-suchen-und-ersetzen-de-plugin
 
 = Where can I get more information? =
 
-Please visit [the official website](http://bueltge.de/wp-rss-import-plugin/55/ "JS AntiSpam") for the latest information on this plugin.
+Please visit [the official website](http://bueltge.de/wp-suchen-und-ersetzen-de-plugin/114/ "JS AntiSpam") for the latest information on this plugin.
 
 = I love this plugin! How can I show the developer how much I appreciate his work? =
 
-Please visit [the official website](http://bueltge.de/wp-rss-import-plugin/55/ "JS AntiSpam") and let him know your care or see the [wishlist](http://bueltge.de/wunschliste/ "Wishlist") of the author.
+Please visit [the official website](http://bueltge.de/wp-suchen-und-ersetzen-de-plugin/114/ "JS AntiSpam") and let him know your care or see the [wishlist](http://bueltge.de/wunschliste/ "Wishlist") of the author.
