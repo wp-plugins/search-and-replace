@@ -3,7 +3,7 @@ Contributors: Bueltge
 Donate link: http://bueltge.de/wunschliste/
 Tags: database, mysql, search, replace
 Requires at least: 1.5
-Tested up to: 2.1.3
+Tested up to: 2.3.1
 Stable tag: 1.0
 
 A simple search for find strings in your database and replace the string.
@@ -17,7 +17,7 @@ Please visit [the official website](http://bueltge.de/wp-suchen-und-ersetzen-de-
 
 == Installation ==
 1. Unpack the download-package
-1. Upload all files to the `/wp-content/plugins/` directory, without folder
+1. Upload all files to the `/wp-content/plugins/` directory, with folder
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Got to Manage -> Search/Replace
 
