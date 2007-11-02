@@ -27,6 +27,10 @@ See on [the official website](http://bueltge.de/wp-suchen-und-ersetzen-de-plugin
 
 1. admin-area
 
+== Other Notes ==
+= Acknowledgements =
+French translation by [Valentin Guenichon](http://guenichon.com/ "Valentin Guenichon")
+
 == Frequently Asked Questions ==
 
 = Where can I get more information? =
