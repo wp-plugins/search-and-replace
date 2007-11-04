@@ -3,7 +3,7 @@ Contributors: Bueltge
 Donate link: http://bueltge.de/wunschliste/
 Tags: database, mysql, search, replace
 Requires at least: 1.5
-Tested up to: 2.3.1
+Tested up to: 2.4
 Stable tag: 1.0
 
 A simple search for find strings in your database and replace the string.
@@ -13,7 +13,7 @@ A simple search for find strings in your database and replace the string. You ca
 
 "Search and Replace" Originalplugin ist von [Mark Cunningham](http://thedeadone.net/ "Mark Cunningham") and was advanced (comments and comment-author) by [Gonahkar](http://www.gonahkar.com/ "Gonahkar"). More increments by Frank Bueltge.
 
-Please visit [the official website](http://bueltge.de/wp-suchen-und-ersetzen-de-plugin/114/ "JS AntiSpam") for further details and the latest information on this plugin.
+Please visit [the official website](http://bueltge.de/wp-suchen-und-ersetzen-de-plugin/114/ "Search and Replace") for further details and the latest information on this plugin.
 
 == Installation ==
 1. Unpack the download-package
@@ -31,12 +31,14 @@ See on [the official website](http://bueltge.de/wp-suchen-und-ersetzen-de-plugin
 = Acknowledgements =
 French translation by [Valentin Guenichon](http://guenichon.com/ "Valentin Guenichon")
 
+Polish translation by [Bartosz Sobczyk](http://www.brt12.eu "Bartosz Sobczyk")
+
 == Frequently Asked Questions ==
 
 = Where can I get more information? =
 
-Please visit [the official website](http://bueltge.de/wp-suchen-und-ersetzen-de-plugin/114/ "JS AntiSpam") for the latest information on this plugin.
+Please visit [the official website](http://bueltge.de/wp-suchen-und-ersetzen-de-plugin/114/ "Search and Replace") for the latest information on this plugin.
 
 = I love this plugin! How can I show the developer how much I appreciate his work? =
 
-Please visit [the official website](http://bueltge.de/wp-suchen-und-ersetzen-de-plugin/114/ "JS AntiSpam") and let him know your care or see the [wishlist](http://bueltge.de/wunschliste/ "Wishlist") of the author.
+Please visit [the official website](http://bueltge.de/wp-suchen-und-ersetzen-de-plugin/114/ "Search and Replace") and let him know your care or see the [wishlist](http://bueltge.de/wunschliste/ "Wishlist") of the author.

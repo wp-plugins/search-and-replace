@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Search and Replace\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2007-10-25 10:39+0100\n"
+"PO-Revision-Date: 2007-11-04 10:27+0100\n"
 "Last-Translator: Frank Bueltge <frank@bueltge.de>\n"
 "Language-Team: Frank Bueltge <frank@bueltge.de>\n"
 "MIME-Version: 1.0\n"
@@ -119,7 +119,7 @@ msgid "mit"
 msgstr "with"
 
 #: searchandreplace.php:184
-msgid "Asuf&uuml;hren"
+msgid "Ausf&uuml;hren"
 msgstr "Go"
 
 #: searchandreplace.php:189

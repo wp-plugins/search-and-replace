@@ -181,7 +181,7 @@ if (!is_plugin_page()) {
 			<td><input class="code" type="text" name="replace_text" value="" size="80" /></td>
 		</tr>
 	</table>
-	<p class="submit"><input class="submit" type="submit" value="<?php _e('Asuf&uuml;hren', 'searchandreplace'); ?> &raquo;" /></p>
+	<p class="submit"><input class="submit" type="submit" value="<?php _e('Ausf&uuml;hren', 'searchandreplace'); ?> &raquo;" /></p>
 	<input type="hidden" name="submitted" />
 	</fieldset>
 	</form>
