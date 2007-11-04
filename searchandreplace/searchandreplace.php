@@ -3,7 +3,7 @@
 Plugin Name: Search and Replace
 Plugin URI: http://bueltge.de/wp-suchen-und-ersetzen-de-plugin/114
 Description: A simple search for find strings in your database and replace the string. Use in <a href="admin.php?page=searchandreplace/searchandreplace.php">Manage -> Search/Replace</a> by <a href='http://thedeadone.net/'>Mark Cunningham</a> and <a href="http://bueltge.de" >Frank Bueltge</a>
-Version: 1.7
+Version: 1.71
 */
 
 /* 
