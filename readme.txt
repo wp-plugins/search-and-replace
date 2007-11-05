@@ -29,7 +29,7 @@ See on [the official website](http://bueltge.de/wp-suchen-und-ersetzen-de-plugin
 
 == Other Notes ==
 = Acknowledgements =
-French translation by [Valentin Guenichon](http://guenichon.com/ "Valentin Guenichon")
+French translation by [Valentin Guenichon (fr-FR)](http://guenichon.com/ "Valentin Guenichon") and [Fr&eacute;d&eacute;ric Bourgeon (searchandreplace-fr_FR)](http://maxbourgeon.free.fr/blog/ "Fr&eacute;d&eacute;ric Bourgeon")
 
 Polish translation by [Bartosz Sobczyk](http://www.brt12.eu "Bartosz Sobczyk")
 
