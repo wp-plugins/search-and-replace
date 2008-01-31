@@ -3,13 +3,13 @@ Contributors: Bueltge
 Donate link: http://bueltge.de/wunschliste/
 Tags: database, mysql, search, replace
 Requires at least: 1.5
-Tested up to: 2.4
+Tested up to: 2.4-bleeding
 Stable tag: 1.0
 
 A simple search for find strings in your database and replace the string.
 
 == Description ==
-A simple search for find strings in your database and replace the string. You can search in posts, titel, excerpt, comments, comment-author, comment-e-mail ans comment-url.
+A simple search for find strings in your database and replace the string. You can search in posts, titel, excerpt, comments, comment-author, comment-e-mail, comment-url, tags/categories and categories-description.
 
 "Search and Replace" Originalplugin ist von [Mark Cunningham](http://thedeadone.net/ "Mark Cunningham") and was advanced (comments and comment-author) by [Gonahkar](http://www.gonahkar.com/ "Gonahkar"). More increments by Frank Bueltge.
 
