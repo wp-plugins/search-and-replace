@@ -4,7 +4,7 @@ Plugin Name: Search &amp; Replace
 Plugin URI: http://bueltge.de/wp-suchen-und-ersetzen-de-plugin/114
 Description: A simple search for find strings in your database and replace the string. Use in <a href="admin.php?page=searchandreplace/searchandreplace.php">Manage -> Search/Replace</a>. 
 Author: <a href='http://thedeadone.net/'>Mark Cunningham</a> and <a href="http://bueltge.de" >Frank Bueltge</a>
-Version: 1.8
+Version: 1.8.1
 */
 
 /*
@@ -328,11 +328,11 @@ if ( !is_plugin_page() ) {
 												<td><input class="code" type="text" name="replace_text" value="" size="80" /></td>
 											</tr>
 										</table>
-										<p class="submit">
-											<?php searchandreplace_nonce_field('$searchandreplace_nonce', $searchandreplace_nonce); ?>
-											<input type="hidden" name="searchandreplace_key" value="<?php echo $searchandreplace_key ?>" />
-											<input class="submit" type="submit" value="<?php _e('Ausf&uuml;hren', 'searchandreplace'); ?> &raquo;" />
-										</p>
+										<?php searchandreplace_nonce_field('$searchandreplace_nonce', $searchandreplace_nonce); ?>
+										<input type="hidden" name="searchandreplace_key" value="<?php echo $searchandreplace_key ?>" />
+										<div class="tablenav">
+											<input class="button" type="submit" value="<?php _e('Ausf&uuml;hren', 'searchandreplace'); ?> &raquo;" />
+										</div>
 										<input type="hidden" name="submitted" />
 									</form>
 
