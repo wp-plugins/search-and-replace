@@ -207,7 +207,9 @@ if ( !is_plugin_page() ) {
 				<?php } else { ?>
 								<p><?php _e('Erfolgreich durchgef&uuml;hrt!', 'searchandreplace'); ?></p></div>
 				<?php }
-						} //end wp_nonce
+						}
+					} else {
+						wp_die('<p>'.__('You do not have sufficient permissions to edit plugins for this blog.').'</p>');
 					}
 				} ?>
 
