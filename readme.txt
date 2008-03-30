@@ -1,15 +1,15 @@
 === Search and Replace ===
 Contributors: Bueltge
 Donate link: http://bueltge.de/wunschliste/
-Tags: database, mysql, search, replace
+Tags: database, mysql, search, replace, admin, security
 Requires at least: 1.5
-Tested up to: 2.4-bleeding
+Tested up to: 2.5
 Stable tag: 1.0
 
 A simple search for find strings in your database and replace the string.
 
 == Description ==
-A simple search for find strings in your database and replace the string. You can search in posts, titel, excerpt, comments, comment-author, comment-e-mail, comment-url, tags/categories and categories-description.
+A simple search for find strings in your database and replace the string. You can search in post-content, GUID, titel, excerpt, meta-data, comments, comment-author, comment-e-mail, comment-url, tags/categories and categories-description. It is possible to replace the user-ID in all tables and the user-login for more security in the WordPress-Application ( [more Informations](http://wordpress-buch.bueltge.de/wordpress-sicherer-machen/30/ "about Security in WordPress") ).
 
 "Search and Replace" Originalplugin ist von [Mark Cunningham](http://thedeadone.net/ "Mark Cunningham") and was advanced (comments and comment-author) by [Gonahkar](http://www.gonahkar.com/ "Gonahkar"). More increments by Frank Bueltge.
 

@@ -4,14 +4,20 @@ Plugin Name: Search &amp; Replace
 Plugin URI: http://bueltge.de/wp-suchen-und-ersetzen-de-plugin/114
 Description: A simple search for find strings in your database and replace the string. Use in <a href="admin.php?page=searchandreplace/searchandreplace.php">Manage -> Search/Replace</a>. 
 Author: <a href='http://thedeadone.net/'>Mark Cunningham</a> and <a href="http://bueltge.de" >Frank Bueltge</a>
-Version: 1.9
+Version: 2.0
 */
 
-/*
+/**
 Um dieses Plugin zu nutzen, musst du das File in den 
 Plugin-Ordner deines WP kopieren und aktivieren.
 Es fuegt einen neuen Tab im Bereich "Verwalten" hinzu.
 Dort koennen Strings dann gesucht und ersetzt werden.
+*/
+
+/**
+TODO:
+guid from posts, and meta_value from postmeta
+http://wordpress.org/support/topic/153078
 */
 
 if(function_exists('load_plugin_textdomain'))
@@ -47,14 +53,18 @@ if ( !is_plugin_page() ) {
 	function tdo_do_searchandreplace($search_text,
 																	$replace_text,
 																	$content              = TRUE,
+																	$guid                 = TRUE,
 																	$title                = TRUE,
 																	$excerpt              = TRUE,
+																	$meta_value           = TRUE,
 																	$comment_content      = TRUE,
 																	$comment_author       = TRUE,
 																	$comment_author_email = TRUE,
 																	$comment_author_url   = TRUE,
 																	$cat_description      = TRUE,
-																	$tag                  = TRUE
+																	$tag                  = TRUE,
+																	$user_id              = TRUE,
+																	$user_login           = TRUE
 																	) {
 		global $wpdb;
 		
@@ -62,11 +72,11 @@ if ( !is_plugin_page() ) {
 		$search_slug  = strtolower($search_text);
 		$replace_slug = strtolower($replace_text);
 		
-		if (!$content && !$title && !$excerpt && !$comment_content && !$comment_author && !$comment_author_email && !$comment_author_url && !$cat_description && !$tag) {
+		if (!$content && !$guid && !$title && !$excerpt && !$meta_value && !$comment_content && !$comment_author && !$comment_author_email && !$comment_author_url && !$cat_description && !$tag && !$user_id && !$user_login) {
 			return __('<p><strong>Keine Aktion (Checkbox) gew&auml;hlt um zu ersetzen!</strong></p>', 'searchandreplace');
 		}
 		
-		echo '<div class="updated">' . "\n" . '<ul>';
+		echo '<br /><div class="updated">' . "\n" . '<ul>';
 		
 		// post content
 		if ($content) {
@@ -74,6 +84,15 @@ if ( !is_plugin_page() ) {
 			$query = "UPDATE $wpdb->posts ";
 			$query .= "SET post_content = ";
 			$query .= "REPLACE(post_content, \"$search_text\", \"$replace_text\") ";
+			$wpdb->get_results($query);
+		}
+
+		// post guid
+		if ($guid) {
+			echo '<li>' . __('Suche nach GUID', 'searchandreplace') . ' ...</li>';
+			$query = "UPDATE $wpdb->posts ";
+			$query .= "SET guid = ";
+			$query .= "REPLACE(guid, \"$search_text\", \"$replace_text\") ";
 			$wpdb->get_results($query);
 		}
 		
@@ -92,6 +111,15 @@ if ( !is_plugin_page() ) {
 			$query = "UPDATE $wpdb->posts ";
 			$query .= "SET post_excerpt = ";
 			$query .= "REPLACE(post_excerpt, \"$search_text\", \"$replace_text\") ";
+			$wpdb->get_results($query);
+		}
+		
+		// meta_value
+		if ($meta_value) {
+			echo '<li>' . __('Suche nach Meta Daten', 'searchandreplace') . ' ...</li>';
+			$query = "UPDATE $wpdb->postmeta ";
+			$query .= "SET meta_value = ";
+			$query .= "REPLACE(meta_value, \"$search_text\", \"$replace_text\") ";
 			$wpdb->get_results($query);
 		}
 		
@@ -154,6 +182,39 @@ if ( !is_plugin_page() ) {
 			$wpdb->get_results($query);
 		}
 
+		// user_id
+		if ($user_id) {
+			echo '<li>' . __('Suche nach User-ID', 'searchandreplace') . ' ...</li>';
+			$query = "UPDATE $wpdb->users ";
+			$query .= "SET ID = ";
+			$query .= "REPLACE(ID, \"$search_text\", \"$replace_text\") ";
+			$wpdb->get_results($query);
+			
+			$query = "UPDATE $wpdb->usermeta ";
+			$query .= "SET user_id = ";
+			$query .= "REPLACE(user_id, \"$search_slug\", \"$replace_slug\") ";
+			$wpdb->get_results($query);
+			
+			$query = "UPDATE $wpdb->posts ";
+			$query .= "SET post_author = ";
+			$query .= "REPLACE(post_author, \"$search_slug\", \"$replace_slug\") ";
+			$wpdb->get_results($query);
+			
+			$query = "UPDATE $wpdb->links ";
+			$query .= "SET link_owner = ";
+			$query .= "REPLACE(link_owner, \"$search_slug\", \"$replace_slug\") ";
+			$wpdb->get_results($query);
+		}
+
+		// user_login
+		if ($user_login) {
+			echo '<li>' . __('Suche nach User Login', 'searchandreplace') . ' ...</li>';
+			$query = "UPDATE $wpdb->users ";
+			$query .= "SET user_login = ";
+			$query .= "REPLACE(user_login, \"$search_text\", \"$replace_text\") ";
+			$wpdb->get_results($query);
+		}
+
 		echo "\n" . '</ul>';	
 		return '';
 	}
@@ -191,14 +252,17 @@ if ( !is_plugin_page() ) {
 												$_POST['search_text'],
 												$_POST['replace_text'],
 												isset($_POST['content']),
+												isset($_POST['guid']),
 												isset($_POST['title']),
 												isset($_POST['excerpt']),
+												isset($_POST['meta_value']),
 												isset($_POST['comment_content']),
 												isset($_POST['comment_author']),
 												isset($_POST['comment_author_email']),
 												isset($_POST['comment_author_url']),
 												isset($_POST['cat_description']),
-												isset($_POST['tag'])
+												isset($_POST['tag']),
+												isset($_POST['user_id'])
 											);
 											
 							if ($error != '') { ?>
@@ -226,46 +290,76 @@ if ( !is_plugin_page() ) {
 						<h3><?php _e('Suche in', 'searchandreplace') ?></h3>
 						<form name="replace" action="" method="post">
 							<?php searchandreplace_nonce_field($searchandreplace_nonce) ?>
-							<table summary="config">
-								<tr>
+							<table summary="config" class="widefat">
+								<tr class="form-invalid">
+									<th><label for="content_label"><?php _e('Beitr&auml;gen', 'searchandreplace'); ?></label></th>
 									<td colspan="2" style="text-align: center;"><input type='checkbox' name='content' id='content_label' /></td>
-									<td><label for="content_label"><?php _e('Beitr&auml;gen', 'searchandreplace'); ?></label></td>
+									<td><label for="content_label"><?php _e('(Feld: <code>post_content</code> Tabelle: <code>_posts</code>)', 'searchandreplace'); ?></label></td>
 								</tr>
 								<tr>
+									<th><label for="guid_label"><?php _e('GUID', 'searchandreplace'); ?></label></th>
+									<td colspan="2" style="text-align: center;"><input type='checkbox' name='guid' id='guid_label' /></td>
+									<td><label for="guid_label"><?php _e('(Feld: <code>guid</code> Tabelle: <code>_posts</code>)', 'searchandreplace'); ?></label></td>
+								</tr>
+								<tr class="form-invalid">
+									<th><label for="title_label"><?php _e('Titeln', 'searchandreplace'); ?></label></th>
 									<td colspan="2" style="text-align: center;"><input type='checkbox' name='title' id='title_label' /></td>
-									<td><label for="title_label"><?php _e('Titeln', 'searchandreplace'); ?></label></td>
+									<td><label for="title_label"><?php _e('(Feld: <code>post_tilte</code> Tabelle: <code>_posts</code>)', 'searchandreplace'); ?></label></td>
 								</tr>
 								<tr>
+									<th><label for="excerpt_label"><?php _e('Ausz&uuml;gen', 'searchandreplace'); ?></label></th>
 									<td colspan="2" style="text-align: center;"><input type='checkbox' name='excerpt' id='excerpt_label' /></td>
-									<td><label for="excerpt_label"><?php _e('Ausz&uuml;gen', 'searchandreplace'); ?></label></td>
+									<td><label for="excerpt_label"><?php _e('(Feld: <code>post_excerpt</code> Tabelle: <code>_posts</code>)', 'searchandreplace'); ?></label></td>
+								</tr>
+								<tr class="form-invalid">
+									<th><label for="meta_value_label"><?php _e('Meta Daten', 'searchandreplace'); ?></label></th>
+									<td colspan="2" style="text-align: center;"><input type='checkbox' name='meta_value' id='meta_value_label' /></td>
+									<td><label for="meta_value_label"><?php _e('(Feld: <code>meta_value</code> Tabelle: <code>_postmeta</code>)', 'searchandreplace'); ?></label></td>
 								</tr>
 								<tr>
+									<th><label for="comment_content_label"><?php _e('Kommentarbeitr&auml;gen', 'searchandreplace'); ?></label></th>
 									<td colspan="2" style="text-align: center;"><input type='checkbox' name='comment_content' id='comment_content_label' /></td>
-									<td><label for="comment_content_label"><?php _e('Kommentarbeitr&auml;gen', 'searchandreplace'); ?></label></td>
+									<td><label for="comment_content_label"><?php _e('(Feld: <code>comment_content</code> Tabelle: <code>_comments</code>)', 'searchandreplace'); ?></label></td>
 								</tr>
-								<tr>
+								<tr class="form-invalid">
+									<th><label for="comment_author_label"><?php _e('Kommentarautoren', 'searchandreplace'); ?></label></th>
 									<td colspan="2" style="text-align: center;"><input type='checkbox' name='comment_author' id='comment_author_label' /></td>
-									<td><label for="comment_author_label"><?php _e('Kommentarautoren', 'searchandreplace'); ?></label></td>
+									<td><label for="comment_author_label"><?php _e('(Feld: <code>comment_author</code> Tabelle: <code>_comments</code>)', 'searchandreplace'); ?></label></td>
 								</tr>
 								<tr>
+									<th><label for="comment_author_email_label"><?php _e('Kommentarautoren-E-Mail', 'searchandreplace'); ?></label></th>
 									<td colspan="2" style="text-align: center;"><input type='checkbox' name='comment_author_email' id='comment_author_email_label' /></td>
-									<td><label for="comment_author_email_label"><?php _e('Kommentarautoren-E-Mail', 'searchandreplace'); ?></label></td>
+									<td><label for="comment_author_email_label"><?php _e('(Feld: <code>comment_author_email</code> Tabelle: <code>_comments</code>)', 'searchandreplace'); ?></label></td>
 								</tr>
-								<tr>
+								<tr class="form-invalid">
+									<th><label for="comment_author_url_label"><?php _e('Kommentarautoren-URLs', 'searchandreplace'); ?></label></th>
 									<td colspan="2" style="text-align: center;"><input type='checkbox' name='comment_author_url' id='comment_author_url_label' /></td>
-									<td><label for="comment_author_url_label"><?php _e('Kommentarautoren-URLs', 'searchandreplace'); ?></label></td>
+									<td><label for="comment_author_url_label"><?php _e('(Feld: <code>comment_author_url</code> Tabelle: <code>_comments</code>)', 'searchandreplace'); ?></label></td>
 								</tr>
 								<?php if(mysql_num_rows(mysql_query("SHOW TABLES LIKE '".$wpdb->prefix . 'terms'."'") ) == 1) { ?>
 								<tr>
+									<th><label for="cat_description_label"><?php _e('Kategorie-Beschreibung', 'searchandreplace'); ?></label></th>
 									<td colspan="2" style="text-align: center;"><input type='checkbox' name='cat_description' id='cat_description_label' /></td>
-									<td><label for="cat_description_label"><?php _e('Kategorie-Beschreibung', 'searchandreplace'); ?></label></td>
+									<td><label for="cat_description_label"><?php _e('(Feld: <code>description</code> Tabelle: <code>_term_taxonomy</code>)', 'searchandreplace'); ?></label></td>
 								</tr>
-								<tr>
+								<tr class="form-invalid">
+									<th><label for="tag_label"><?php _e('Tags &amp; Kategorien', 'searchandreplace'); ?></label></th>
 									<td colspan="2" style="text-align: center;"><input type='checkbox' name='tag' id='tag_label' /></td>
-									<td><label for="tag_label"><?php _e('Tags &amp; Kategorien', 'searchandreplace'); ?></label></td>
+									<td><label for="tag_label"><?php _e('(Feld: <code>name</code> und <code>slug</code> Tabelle: <code>_terms</code>)', 'searchandreplace'); ?></label></td>
 								</tr>
 								<?php } ?>
 								<tr>
+									<th><label for="user_id_label"><?php _e('User-ID', 'searchandreplace'); ?></label></th>
+									<td colspan="2" style="text-align: center;"><input type='checkbox' name='user_id' id='user_id_label' /></td>
+									<td><label for="user_id_label"><?php _e('(Feld: <code>ID</code>, <code>user_id</code>, <code>post_author</code> und <code>link_owner</code> Tabelle: <code>_users</code>, <code>_usermeta</code>, <code>_posts</code> und <code>_links</code>)', 'searchandreplace'); ?></label></td>
+								</tr>
+								<tr class="form-invalid">
+									<th><label for="user_login_label"><?php _e('User-Login', 'searchandreplace'); ?></label></th>
+									<td colspan="2" style="text-align: center;"><input type='checkbox' name='user_login' id='user_login_label' /></td>
+									<td><label for="user_login_label"><?php _e('(Feld: <code>user_login</code> Tabelle: <code>_users</code>)', 'searchandreplace'); ?></label></td>
+								</tr>
+								<tr>
+									<th>&nbsp;</th>
 									<td colspan="2" style="text-align: center;">&nbsp;&nbsp; <a href="javascript:selectcb('replace', true);" title="<?php _e('Checkboxen markieren', 'searchandreplace'); ?>"><?php _e('alle', 'searchandreplace'); ?></a> | <a href="javascript:selectcb('replace', false);" title="<?php _e('Checkboxen demarkieren', 'searchandreplace'); ?>"><?php _e('keine', 'searchandreplace'); ?></a></td>
 									<td>&nbsp;</td>
 								</tr>
@@ -292,8 +386,8 @@ if ( !is_plugin_page() ) {
 						</div>
 
 						<h3><?php _e('Hinweise zum Plugin', 'searchandreplace') ?></h3>
-						<p><small><?php _e('&quot;Search and Replace&quot; Originalplugin (en) ist von <a href=\'http://thedeadone.net/\'>Mark Cunningham</a> und wurde erweitert (Kommentarbeitr&auml;ge, Kommentarautor) durch <a href=\'http://www.gonahkar.com\'>Gonahkar</a>.<br />&quot;Suchen &amp; Ersetzen&quot; wurde erweitert und gepflegt in der aktuellen Version durch <a href=\'http://bueltge.de\'>Frank Bueltge</a>.', 'searchandreplace'); ?></small></p>
-						<p><small><?php _e('Weitere Informationen: Besuche die <a href=\'http://bueltge.de/wp-suchen-und-ersetzen-de-plugin/114\'>plugin homepage</a> f&uuml;r weitere Informationen oder nutze die letzte Version des Plugins.', 'searchandreplace'); ?><br />&copy; Copyright 2008 <a href="http://bueltge.de">Frank B&uuml;ltge</a> | <?php _e('Du willst Danke sagen? Besuche meine <a href=\'http://bueltge.de/wunschliste\'>Wunschliste</a>.', 'searchandreplace'); ?></small></p>
+						<p><?php _e('&quot;Search and Replace&quot; Originalplugin (en) ist von <a href=\'http://thedeadone.net/\'>Mark Cunningham</a> und wurde erweitert (Kommentarbeitr&auml;ge, Kommentarautor) durch <a href=\'http://www.gonahkar.com\'>Gonahkar</a>.<br />&quot;Suchen &amp; Ersetzen&quot; wurde erweitert und gepflegt in der aktuellen Version durch <a href=\'http://bueltge.de\'>Frank Bueltge</a>.', 'searchandreplace'); ?></p>
+						<p><?php _e('Weitere Informationen: Besuche die <a href=\'http://bueltge.de/wp-suchen-und-ersetzen-de-plugin/114\'>plugin homepage</a> f&uuml;r weitere Informationen oder nutze die letzte Version des Plugins.', 'searchandreplace'); ?><br />&copy; Copyright 2006 - <?php echo date("Y"); ?> <a href="http://bueltge.de">Frank B&uuml;ltge</a> | <?php _e('Du willst Danke sagen? Besuche meine <a href=\'http://bueltge.de/wunschliste\'>Wunschliste</a>.', 'searchandreplace'); ?></p>
 	</div>
 
 <?php } ?>
