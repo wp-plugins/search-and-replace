@@ -14,12 +14,6 @@ Es fuegt einen neuen Tab im Bereich "Verwalten" hinzu.
 Dort koennen Strings dann gesucht und ersetzt werden.
 */
 
-/**
-TODO:
-guid from posts, and meta_value from postmeta
-http://wordpress.org/support/topic/153078
-*/
-
 if(function_exists('load_plugin_textdomain'))
 	load_plugin_textdomain('searchandreplace', 'wp-content/plugins/searchandreplace');
 
