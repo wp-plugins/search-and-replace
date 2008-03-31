@@ -4,7 +4,7 @@ Plugin Name: Search &amp; Replace
 Plugin URI: http://bueltge.de/wp-suchen-und-ersetzen-de-plugin/114
 Description: A simple search for find strings in your database and replace the string. Use in <a href="admin.php?page=searchandreplace/searchandreplace.php">Manage -> Search/Replace</a>. 
 Author: <a href='http://thedeadone.net/'>Mark Cunningham</a> and <a href="http://bueltge.de" >Frank Bueltge</a>
-Version: 2.0
+Version: 2.1
 */
 
 /**
@@ -256,7 +256,8 @@ if ( !is_plugin_page() ) {
 												isset($_POST['comment_author_url']),
 												isset($_POST['cat_description']),
 												isset($_POST['tag']),
-												isset($_POST['user_id'])
+												isset($_POST['user_id']),
+												isset($_POST['user_login'])
 											);
 											
 							if ($error != '') { ?>
