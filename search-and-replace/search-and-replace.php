@@ -15,7 +15,7 @@ Dort koennen Strings dann gesucht und ersetzt werden.
 */
 
 if(function_exists('load_plugin_textdomain'))
-	load_plugin_textdomain('searchandreplace', 'wp-content/plugins/search-and-replace/languages');
+	load_plugin_textdomain('searchandreplace', PLUGINDIR . '/search-and-replace/languages');
 
 if ( !is_plugin_page() ) {
 
