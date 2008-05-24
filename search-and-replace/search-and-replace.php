@@ -55,6 +55,7 @@ if ( !is_plugin_page() ) {
 																	$comment_author       = TRUE,
 																	$comment_author_email = TRUE,
 																	$comment_author_url   = TRUE,
+																	$comment_count        = TRUE,
 																	$cat_description      = TRUE,
 																	$tag                  = TRUE,
 																	$user_id              = TRUE,
@@ -66,7 +67,7 @@ if ( !is_plugin_page() ) {
 		$search_slug  = strtolower($search_text);
 		$replace_slug = strtolower($replace_text);
 		
-		if (!$content && !$id && !$guid && !$title && !$excerpt && !$meta_value && !$comment_content && !$comment_author && !$comment_author_email && !$comment_author_url && !$cat_description && !$tag && !$user_id && !$user_login) {
+		if (!$content && !$id && !$guid && !$title && !$excerpt && !$meta_value && !$comment_content && !$comment_author && !$comment_author_email && !$comment_author_url && !$comment_count && !$cat_description && !$tag && !$user_id && !$user_login) {
 			return __('<p><strong>Keine Aktion (Checkbox) gew&auml;hlt um zu ersetzen!</strong></p>', 'searchandreplace');
 		}
 
@@ -74,7 +75,12 @@ if ( !is_plugin_page() ) {
 		
 		// post content
 		if ($content) {
-			echo "\n" . '<li>' . __('Suche nach Beitr&auml;gen', 'searchandreplace') . ' ...</li>';
+			echo "\n" . '<li>' . __('Suche nach Beitr&auml;gen', 'searchandreplace') . ' ...';
+			
+			echo "\n" . '<ul>' . "\n";
+			fb_sql_results('post_content', 'posts');
+			echo "\n" . '</ul>' . "\n" . '</li>' . "\n";
+			
 			$query = "UPDATE $wpdb->posts ";
 			$query .= "SET post_content = ";
 			$query .= "REPLACE(post_content, \"$search_text\", \"$replace_text\") ";
@@ -83,13 +89,15 @@ if ( !is_plugin_page() ) {
 
 		// post id
 		if ($id) {
-			echo "\n" . '<li>' . __('Suche nach ID', 'searchandreplace') . ' ...</li>';
+			echo "\n" . '<li>' . __('Suche nach ID', 'searchandreplace') . ' ...';
 			
+			echo "\n" . '<ul>' . "\n";
 			fb_sql_results('ID', 'posts');
 			fb_sql_results('post_parent', 'posts');
 			fb_sql_results('post_id', 'postmeta');
 			fb_sql_results('object_id', 'term_relationships');
 			fb_sql_results('comment_post_ID', 'comments');
+			echo "\n" . '</ul>' . "\n" . '</li>' . "\n";
 			
 			$query = "UPDATE $wpdb->posts ";
 			$query .= "SET ID = ";
@@ -120,9 +128,11 @@ if ( !is_plugin_page() ) {
 		
 		// post guid
 		if ($guid) {
-			echo "\n" . '<li>' . __('Suche nach GUID', 'searchandreplace') . ' ...</li>';
+			echo "\n" . '<li>' . __('Suche nach GUID', 'searchandreplace') . ' ...';
 			
+			echo "\n" . '<ul>' . "\n";
 			fb_sql_results('guid', 'posts');
+			echo "\n" . '</ul>' . "\n" . '</li>' . "\n";
 			
 			$query = "UPDATE $wpdb->posts ";
 			$query .= "SET guid = ";
@@ -132,9 +142,11 @@ if ( !is_plugin_page() ) {
 		
 		// post title
 		if ($title) {
-			echo "\n" . '<li>' . __('Suche nach Titeln', 'searchandreplace') . ' ...</li>';
+			echo "\n" . '<li>' . __('Suche nach Titeln', 'searchandreplace') . ' ...';
 			
+			echo "\n" . '<ul>' . "\n";
 			fb_sql_results('post_title', 'posts');
+			echo "\n" . '</ul>' . "\n" . '</li>' . "\n";
 			
 			$query = "UPDATE $wpdb->posts ";
 			$query .= "SET post_title = ";
@@ -144,9 +156,11 @@ if ( !is_plugin_page() ) {
 		
 		// post excerpt
 		if ($excerpt) {
-			echo "\n" . '<li>' . __('Suche nach Ausz&uuml;gen', 'searchandreplace') . ' ...</li>';
+			echo "\n" . '<li>' . __('Suche nach Ausz&uuml;gen', 'searchandreplace') . ' ...';
 			
+			echo "\n" . '<ul>' . "\n";
 			fb_sql_results('post_excerpt', 'posts');
+			echo "\n" . '</ul>' . "\n" . '</li>' . "\n";
 			
 			$query = "UPDATE $wpdb->posts ";
 			$query .= "SET post_excerpt = ";
@@ -156,9 +170,11 @@ if ( !is_plugin_page() ) {
 		
 		// meta_value
 		if ($meta_value) {
-			echo "\n" . '<li>' . __('Suche nach Meta Daten', 'searchandreplace') . ' ...</li>';
+			echo "\n" . '<li>' . __('Suche nach Meta Daten', 'searchandreplace') . ' ...';
 			
+			echo "\n" . '<ul>' . "\n";
 			fb_sql_results('meta_value', 'postmeta');
+			echo "\n" . '</ul>' . "\n" . '</li>' . "\n";
 			
 			$query = "UPDATE $wpdb->postmeta ";
 			$query .= "SET meta_value = ";
@@ -168,9 +184,11 @@ if ( !is_plugin_page() ) {
 		
 		// comment content
 		if ($comment_content) {
-			echo "\n" . '<li>' . __('Suche nach Kommentarbetr&auml;gen', 'searchandreplace') . ' ...</li>';
+			echo "\n" . '<li>' . __('Suche nach Kommentarbetr&auml;gen', 'searchandreplace') . ' ...';
 			
+			echo "\n" . '<ul>' . "\n";
 			fb_sql_results('comment_content', 'comments');
+			echo "\n" . '</ul>' . "\n" . '</li>' . "\n";
 			
 			$query = "UPDATE $wpdb->comments ";
 			$query .= "SET comment_content = ";
@@ -180,9 +198,11 @@ if ( !is_plugin_page() ) {
 		
 		// comment_author
 		if ($comment_author) {
-			echo "\n" . '<li>' . __('Suche nach Kommentarautor', 'searchandreplace') . ' ...</li>';
+			echo "\n" . '<li>' . __('Suche nach Kommentarautor', 'searchandreplace') . ' ...';
 			
+			echo "\n" . '<ul>' . "\n";
 			fb_sql_results('comment_author', 'comments');
+			echo "\n" . '</ul>' . "\n" . '</li>' . "\n";
 			
 			$query = "UPDATE $wpdb->comments ";
 			$query .= "SET comment_author = ";
@@ -192,9 +212,11 @@ if ( !is_plugin_page() ) {
 		
 		// comment_author_email
 		if ($comment_author_email) {
-			echo "\n" . '<li>' . __('Suche nach Kommentarautoren-E-Mails', 'searchandreplace') . ' ...</li>';
+			echo "\n" . '<li>' . __('Suche nach Kommentarautoren-E-Mails', 'searchandreplace') . ' ...';
 			
+			echo "\n" . '<ul>' . "\n";
 			fb_sql_results('comment_author_email', 'comments');
+			echo "\n" . '</ul>' . "\n" . '</li>' . "\n";
 			
 			$query = "UPDATE $wpdb->comments ";
 			$query .= "SET comment_author_email = ";
@@ -204,9 +226,11 @@ if ( !is_plugin_page() ) {
 		
 		// comment_author_url
 		if ($comment_author_url) {
-			echo "\n" . '<li>' . __('Suche nach Kommentarautor-URLs', 'searchandreplace') . ' ...</li>';
+			echo "\n" . '<li>' . __('Suche nach Kommentarautor-URLs', 'searchandreplace') . ' ...';
 			
+			echo "\n" . '<ul>' . "\n";
 			fb_sql_results('comment_author_url', 'comments');
+			echo "\n" . '</ul>' . "\n" . '</li>' . "\n";
 			
 			$query = "UPDATE $wpdb->comments ";
 			$query .= "SET comment_author_url = ";
@@ -214,11 +238,27 @@ if ( !is_plugin_page() ) {
 			$wpdb->get_results($query);
 		}
 
+		// comment_count
+		if ($comment_count) {
+			echo "\n" . '<li>' . __('Suche nach Kommentar-Counter', 'searchandreplace') . ' ...';
+			
+			echo "\n" . '<ul>' . "\n";
+			fb_sql_results('comment_count', 'posts');
+			echo "\n" . '</ul>' . "\n" . '</li>' . "\n";
+			
+			$query = "UPDATE $wpdb->posts ";
+			$query .= "SET comment_count = ";
+			$query .= "REPLACE(comment_count, \"$search_text\", \"$replace_text\") ";
+			$wpdb->get_results($query);
+		}
+
 		// category description
 		if ($cat_description) {
-			echo "\n" . '<li>' . __('Suche nach Kategorie-Beschreibungen', 'searchandreplace') . ' ...</li>';
+			echo "\n" . '<li>' . __('Suche nach Kategorie-Beschreibungen', 'searchandreplace') . ' ...';
 			
+			echo "\n" . '<ul>' . "\n";
 			fb_sql_results('description', 'term_taxonomy');
+			echo "\n" . '</ul>' . "\n" . '</li>' . "\n";
 			
 			$query = "UPDATE $wpdb->term_taxonomy ";
 			$query .= "SET description = ";
@@ -228,9 +268,11 @@ if ( !is_plugin_page() ) {
 		
 		// tags and category
 		if ($tag) {
-			echo "\n" . '<li>' . __('Suche nach Tags', 'searchandreplace') . ' ...</li>';
+			echo "\n" . '<li>' . __('Suche nach Tags', 'searchandreplace') . ' ...';
 			
+			echo "\n" . '<ul>' . "\n";
 			fb_sql_results('name', 'terms');
+			echo "\n" . '</ul>' . "\n" . '</li>' . "\n";
 			
 			$query = "UPDATE $wpdb->terms ";
 			$query .= "SET name = ";
@@ -245,12 +287,14 @@ if ( !is_plugin_page() ) {
 
 		// user_id
 		if ($user_id) {
-			echo "\n" . '<li>' . __('Suche nach User-ID', 'searchandreplace') . ' ...</li>';
+			echo "\n" . '<li>' . __('Suche nach User-ID', 'searchandreplace') . ' ...';
 			
+			echo "\n" . '<ul>' . "\n";
 			fb_sql_results('ID', 'users');
 			fb_sql_results('user_id', 'usermeta');
 			fb_sql_results('post_author', 'posts');
 			fb_sql_results('link_owner', 'links');
+			echo "\n" . '</ul>' . "\n" . '</li>' . "\n";
 			
 			$query = "UPDATE $wpdb->users ";
 			$query .= "SET ID = ";
@@ -275,9 +319,11 @@ if ( !is_plugin_page() ) {
 
 		// user_login
 		if ($user_login) {
-			echo "\n" . '<li>' . __('Suche nach User Login', 'searchandreplace') . ' ...</li>';
+			echo "\n" . '<li>' . __('Suche nach User Login', 'searchandreplace') . ' ...';
 			
+			echo "\n" . '<ul>' . "\n";
 			fb_sql_results('user_login', 'users');
+			echo "\n" . '</ul>' . "\n" . '</li>' . "\n";
 			
 			$query = "UPDATE $wpdb->users ";
 			$query .= "SET user_login = ";
@@ -285,7 +331,7 @@ if ( !is_plugin_page() ) {
 			$wpdb->get_results($query);
 		}
 
-		echo "\n" . '</ul>';	
+		echo "\n" . '</ul>' . "\n";
 		return '';
 	}
 
@@ -300,7 +346,8 @@ if ( !is_plugin_page() ) {
 		$search_text = $_POST['search_text'];
 
 		echo "\n" . '<li>';
-		$results = "SELECT $field FROM " . $wpdb->$table . " WHERE $field = $search_text";
+		$results = "SELECT $field FROM " . $wpdb->$table . " WHERE $field = \"$search_text\"";
+		//echo $results . '<br />';
 		_e('... in Tabelle ', 'searchandreplace');
 		echo '<code>' . $table . '</code>: ';
 		$results = mysql_query($results);
@@ -369,6 +416,7 @@ if ( !is_plugin_page() ) {
 												isset($_POST['comment_author']),
 												isset($_POST['comment_author_email']),
 												isset($_POST['comment_author_url']),
+												isset($_POST['comment_count']),
 												isset($_POST['cat_description']),
 												isset($_POST['tag']),
 												isset($_POST['user_id']),
@@ -404,11 +452,13 @@ if ( !is_plugin_page() ) {
 									<td colspan="2" style="text-align: center;"><input type='checkbox' name='content' id='content_label' /></td>
 									<td><label for="content_label"><?php _e('Feld: <code>post_content</code> Tabelle: <code>_posts</code>', 'searchandreplace'); ?></label></td>
 								</tr>
+								<?php if(mysql_num_rows(mysql_query("SHOW TABLES LIKE '".$wpdb->prefix . 'terms'."'") ) == 1) { ?>
 								<tr class="form-invalid">
 									<th><label for="id_label"><?php _e('ID', 'searchandreplace'); ?></label></th>
 									<td colspan="2" style="text-align: center;"><input type='checkbox' name='id' id='id_label' /></td>
 									<td><label for="id_label"><?php _e('Feld: <code>ID</code>, <code>post_parent</code>, <code>post_id</code>, <code>object_id</code> und <code>comments</code><br />Tabelle: <code>_posts</code>, <code>_postmeta</code>, <code>_term_relationships</code> und <code>_comment_post_ID</code>', 'searchandreplace'); ?></label></td>
 								</tr>
+								<?php } ?>
 								<tr>
 									<th><label for="guid_label"><?php _e('GUID', 'searchandreplace'); ?></label></th>
 									<td colspan="2" style="text-align: center;"><input type='checkbox' name='guid' id='guid_label' /></td>
@@ -449,29 +499,34 @@ if ( !is_plugin_page() ) {
 									<td colspan="2" style="text-align: center;"><input type='checkbox' name='comment_author_url' id='comment_author_url_label' /></td>
 									<td><label for="comment_author_url_label"><?php _e('Feld: <code>comment_author_url</code> Tabelle: <code>_comments</code>', 'searchandreplace'); ?></label></td>
 								</tr>
-								<?php if(mysql_num_rows(mysql_query("SHOW TABLES LIKE '".$wpdb->prefix . 'terms'."'") ) == 1) { ?>
 								<tr>
+									<th><label for="comment_count_label"><?php _e('Kommentar-Counter', 'searchandreplace'); ?></label></th>
+									<td colspan="2" style="text-align: center;"><input type='checkbox' name='comment_count' id='comment_count_label' /></td>
+									<td><label for="comment_count_label"><?php _e('Feld: <code>comment_count</code> Tabelle: <code>_posts</code>', 'searchandreplace'); ?></label></td>
+								</tr>
+								<?php if(mysql_num_rows(mysql_query("SHOW TABLES LIKE '".$wpdb->prefix . 'terms'."'") ) == 1) { ?>
+								<tr class="form-invalid">
 									<th><label for="cat_description_label"><?php _e('Kategorie-Beschreibung', 'searchandreplace'); ?></label></th>
 									<td colspan="2" style="text-align: center;"><input type='checkbox' name='cat_description' id='cat_description_label' /></td>
 									<td><label for="cat_description_label"><?php _e('Feld: <code>description</code> Tabelle: <code>_term_taxonomy</code>', 'searchandreplace'); ?></label></td>
 								</tr>
-								<tr class="form-invalid">
+								<tr>
 									<th><label for="tag_label"><?php _e('Tags &amp; Kategorien', 'searchandreplace'); ?></label></th>
 									<td colspan="2" style="text-align: center;"><input type='checkbox' name='tag' id='tag_label' /></td>
 									<td><label for="tag_label"><?php _e('Feld: <code>name</code> und <code>slug</code> Tabelle: <code>_terms</code>', 'searchandreplace'); ?></label></td>
 								</tr>
 								<?php } ?>
-								<tr>
+								<tr class="form-invalid">
 									<th><label for="user_id_label"><?php _e('User-ID', 'searchandreplace'); ?></label></th>
 									<td colspan="2" style="text-align: center;"><input type='checkbox' name='user_id' id='user_id_label' /></td>
 									<td><label for="user_id_label"><?php _e('Feld: <code>ID</code>, <code>user_id</code>, <code>post_author</code> und <code>link_owner</code><br />Tabelle: <code>_users</code>, <code>_usermeta</code>, <code>_posts</code> und <code>_links</code>', 'searchandreplace'); ?></label></td>
 								</tr>
-								<tr class="form-invalid">
+								<tr>
 									<th><label for="user_login_label"><?php _e('User-Login', 'searchandreplace'); ?></label></th>
 									<td colspan="2" style="text-align: center;"><input type='checkbox' name='user_login' id='user_login_label' /></td>
 									<td><label for="user_login_label"><?php _e('Feld: <code>user_login</code> Tabelle: <code>_users</code>', 'searchandreplace'); ?></label></td>
 								</tr>
-								<tr>
+								<tr class="form-invalid">
 									<th>&nbsp;</th>
 									<td colspan="2" style="text-align: center;">&nbsp;&nbsp; <a href="javascript:selectcb('replace', true);" title="<?php _e('Checkboxen markieren', 'searchandreplace'); ?>"><?php _e('alle', 'searchandreplace'); ?></a> | <a href="javascript:selectcb('replace', false);" title="<?php _e('Checkboxen demarkieren', 'searchandreplace'); ?>"><?php _e('keine', 'searchandreplace'); ?></a></td>
 									<td>&nbsp;</td>
