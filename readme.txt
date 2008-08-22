@@ -3,7 +3,7 @@ Contributors: Bueltge
 Donate link: http://bueltge.de/wunschliste/
 Tags: database, mysql, search, replace, admin, security
 Requires at least: 1.5
-Tested up to: 2.6 bleeding
+Tested up to: 2.7 bleeding
 Stable tag: 1.0
 
 A simple search for find strings in your database and replace the string.
@@ -25,7 +25,7 @@ See on [the official website](http://bueltge.de/wp-suchen-und-ersetzen-de-plugin
 
 == Screenshots ==
 
-1. admin-area
+1. Funktions in WordPress 2.7 beta
 
 == Other Notes ==
 = Acknowledgements =
