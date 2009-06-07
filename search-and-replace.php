@@ -3,8 +3,10 @@
 Plugin Name: Search &amp; Replace
 Plugin URI: http://bueltge.de/wp-suchen-und-ersetzen-de-plugin/114/
 Description: A simple search for find strings in your database and replace the string. 
-Author: <a href='http://thedeadone.net/'>Mark Cunningham</a> and <a href="http://bueltge.de" >Frank Bueltge</a>
+Author: Frank Bültge
+Author URI: http://bueltge.de/
 Version: 2.5
+License: GPL
 */
 
 
@@ -14,6 +16,13 @@ Plugin-Ordner deines WP kopieren und aktivieren.
 Es fuegt einen neuen Tab im Bereich "Verwalten" hinzu.
 Dort koennen Strings dann gesucht und ersetzt werden.
 */
+
+//avoid direct calls to this file, because now WP core and framework has been used
+if ( !function_exists('add_action') ) {
+	header('Status: 403 Forbidden');
+	header('HTTP/1.1 403 Forbidden');
+	exit();
+}
 
 // Pre-2.6 compatibility
 if ( !defined('WP_CONTENT_URL') )
