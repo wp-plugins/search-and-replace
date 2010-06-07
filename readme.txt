@@ -3,7 +3,7 @@ Contributors: Bueltge
 Donate link: http://bueltge.de/wunschliste/
 Tags: database, mysql, search, replace, admin, security
 Requires at least: 1.5
-Tested up to: 2.8
+Tested up to: 3.0
 Stable tag: 1.0
 
 A simple search for find strings in your database and replace the string.
@@ -49,3 +49,7 @@ Please visit [the official website](http://bueltge.de/wp-suchen-und-ersetzen-de-
 = I love this plugin! How can I show the developer how much I appreciate his work? =
 
 Please visit [the official website](http://bueltge.de/wp-suchen-und-ersetzen-de-plugin/114/ "Search and Replace") and let him know your care or see the [wishlist](http://bueltge.de/wunschliste/ "Wishlist") of the author.
+
+== Changelog ==
+= v2.5.1 (07/07/2010) =
+* small changes for use in WP 3.0
