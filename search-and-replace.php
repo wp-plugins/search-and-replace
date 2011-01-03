@@ -7,7 +7,7 @@ Plugin URI: http://bueltge.de/wp-suchen-und-ersetzen-de-plugin/114/
 Description: A simple search for find strings in your database and replace the string. 
 Author: Frank B&uuml;ltge
 Author URI: http://bueltge.de/
-Version: 2.6.0
+Version: 2.6.1
 License: GPL
 Donate URI: http://bueltge.de/wunschliste/
 */
@@ -135,7 +135,8 @@ function searchandreplace_doit(
 	$cat_description      = TRUE,
 	$tag                  = TRUE,
 	$user_id              = TRUE,
-	$user_login           = TRUE
+	$user_login           = TRUE,
+	$signups              = TRUE
 	) {
 	global $wpdb;
 
@@ -144,7 +145,10 @@ function searchandreplace_doit(
 	$search_slug  = strtolower($search_text);
 	$replace_slug = strtolower($replace_text);
 	
-	if (!$all && !$content && !$id && !$guid && !$title && !$excerpt && !$meta_value && !$comment_content && !$comment_author && !$comment_author_email && !$comment_author_url && !$comment_count && !$cat_description && !$tag && !$user_id && !$user_login) {
+	if (!$all && !$content && !$id && !$guid && !$title && !$excerpt && !$meta_value && 
+		!$comment_content && !$comment_author && !$comment_author_email && !$comment_author_url && !$comment_count && 
+		!$cat_description && !$tag && !$user_id && !$user_login &&
+		!$signups ) {
 		return '<div class="error"><p><strong>' . __('Nothing (Checkbox) selected to modify!', FB_SAR_TEXTDOMAIN). '</strong></p></div><br class="clear" />';
 	}
 
@@ -424,6 +428,20 @@ function searchandreplace_doit(
 		$query  = "UPDATE $wpdb->users ";
 		$query .= "SET user_nicename = ";
 		$query .= "REPLACE(user_nicename, \"$search_slug\", \"$replace_slug\") ";
+		$wpdb->get_results($query);
+	}
+	
+	// signups on WP multisite
+	if ($signups) {
+		$myecho .= "\n" . '<li>' . __('Looking @ signups', FB_SAR_TEXTDOMAIN) . ' ...';
+		
+		$myecho .= "\n" . '<ul>' . "\n";
+		$myecho .= searchandreplace_results('user_login', 'signups', $search_text);
+		$myecho .= "\n" . '</ul>' . "\n" . '</li>' . "\n";
+		
+		$query  = "UPDATE $wpdb->signups ";
+		$query .= "SET user_login = ";
+		$query .= "REPLACE(user_login, \"$search_text\", \"$replace_text\") ";
 		$wpdb->get_results($query);
 	}
 	
@@ -716,7 +734,8 @@ function searchandreplace_action() {
 				isset($_POST['cat_description']),
 				isset($_POST['tag']),
 				isset($_POST['user_id']),
-				isset($_POST['user_login'])
+				isset($_POST['user_login']),
+				isset($_POST['singups'])
 			);
 			
 			if ($error != '') {
@@ -732,6 +751,8 @@ function searchandreplace_action() {
 
 
 function searchandreplace_page() {
+	global $wpdb;
+	
 	if ( !isset($wpdb) )
 		$wpdb = NULL;
 ?>
@@ -858,6 +879,13 @@ function searchandreplace_page() {
 								<th><label for="id_label"><?php _e('ID', FB_SAR_TEXTDOMAIN); ?></label></th>
 								<td colspan="2" style="text-align: center;"><input type='checkbox' name='id' id='id_label' /></td>
 								<td><label for="id_label"><?php _e('field:', FB_SAR_TEXTDOMAIN); ?> <code>ID</code>, <code>post_parent</code>, <code>post_id</code>, <code>object_id</code> <?php _e('and', FB_SAR_TEXTDOMAIN); ?> <code>comments</code><br /><?php _e('table:', FB_SAR_TEXTDOMAIN); ?> <code>_posts</code>, <code>_postmeta</code>, <code>_term_relationships</code> <?php _e('and', FB_SAR_TEXTDOMAIN); ?> <code>_comment_post_ID</code></label></td>
+							</tr>
+							<?php } ?>
+							<?php if ($wpdb && mysql_num_rows(mysql_query("SHOW TABLES LIKE '" . $wpdb->prefix . 'signups'."'") ) == 1) { ?>
+							<tr class="alternate">
+								<th><label for="signups_label"><?php _e('Signups', FB_SAR_TEXTDOMAIN); ?></label></th>
+								<td colspan="2" style="text-align: center;"><input type='checkbox' name='signups' id='signups_label' /></td>
+								<td><label for="signups_label"><?php _e('field:', FB_SAR_TEXTDOMAIN); ?> <code>user_login</code> <?php _e('table:', FB_SAR_TEXTDOMAIN); ?> <code>_signups</code></label></td>
 							</tr>
 							<?php } ?>
 							<tr>
