@@ -7,7 +7,7 @@ Plugin URI: http://bueltge.de/wp-suchen-und-ersetzen-de-plugin/114/
 Description: A simple search for find strings in your database and replace the string. 
 Author: Frank B&uuml;ltge
 Author URI: http://bueltge.de/
-Version: 2.5.1
+Version: 2.6.0
 License: GPL
 Donate URI: http://bueltge.de/wunschliste/
 */
@@ -63,59 +63,27 @@ function searchandreplace_textdomain() {
 
 
 /**
- * credit in wp-footer
- */
-function searchandreplace_admin_footer() {
-	$plugin_data = get_plugin_data( __FILE__ );
-	$plugin_data['Title'] = $plugin_data['Name'];
-	if ( !empty($plugin_data['PluginURI']) && !empty($plugin_data['Name']) )
-		$plugin_data['Title'] = '<a href="' . $plugin_data['PluginURI'] . '" title="'.__( 'Visit plugin homepage' ).'">' . $plugin_data['Name'] . '</a>';
-	
-	if ( basename($_SERVER['REQUEST_URI']) == 'search-and-replace.php') {
-		printf('%1$s ' . __('plugin') . ' | ' . __('Version') . ' <a href=" http://bueltge.de/wp-suchen-und-ersetzen-de-plugin/114/#historie" title="' . __('History', 'pxsmail') . '">%2$s</a> | ' . __('Author') . ' %3$s<br />', $plugin_data['Title'], $plugin_data['Version'], $plugin_data['Author']);
-	}
-}
-
-
-function searchandreplace_on_load() {
-	 
-	add_filter( 'plugin_action_links_' . FB_SAR_BASENAME, 'searchandreplace_filter_plugin_meta', 10, 2 );  
-}
-
-
-/**
- * Add action link(s) to plugins page
- * Thanks Dion Hulse -- http://dd32.id.au/wordpress-plugins/?configure-link
- */
-function searchandreplace_filter_plugin_actions($links, $file){
-	static $this_plugin;
-
-	if( !$this_plugin ) $this_plugin = plugin_basename(__FILE__);
-
-	if( $file == $this_plugin ){
-		$settings_link = '<a href="options-general.php?page=search-and-replace/search-and-replace.php">' . __('Settings') . '</a>';
-		$links = array_merge( array($settings_link), $links); // before other links
-	}
-	return $links;
-}
-
-
-/**
  * @version WP 2.8
  * Add action link(s) to plugins page
- *
- * @package Secure WordPress
  *
  * @param $links, $file
  * @return $links
  */
+function searchandreplace_on_load() {
+	
+	add_filter( 'plugin_action_links_' . FB_SAR_BASENAME, 'searchandreplace_filter_plugin_meta', 10, 2 );  
+}
+
 function searchandreplace_filter_plugin_meta($links, $file) {
+	
+	if (empty($links))
+		return;
 	
 	/* create link */
 	if ( $file == FB_SAR_BASENAME ) {
 		array_unshift(
 			$links,
-			sprintf( '<a href="options-general.php?page=%s">%s</a>', FB_SWP_FILENAME, __('Settings') )
+			sprintf( '<a href="tools.php?page=%s">%s</a>', FB_SAR_BASENAME, __('Settings') )
 		);
 	}
 	
@@ -128,41 +96,47 @@ function searchandreplace_filter_plugin_meta($links, $file) {
  */
 function searchandreplace_add_settings_page() {
 
-	if ( current_user_can('unfiltered_html') ) {
-		$pagehook = add_management_page( __( 'Search &amp; Replace', FB_SAR_TEXTDOMAIN ), __( 'Search &amp; Replace', FB_SAR_TEXTDOMAIN ), 'unfiltered_html', FB_SAR_BASENAME, 'searchandreplace_page', '' );
-		add_action( 'load-' . $pagehook, 'searchandreplace_on_load' );
-		wp_enqueue_script('jquery');
-	}
+	if ( !current_user_can('update_core') )
+		return;
+	
+	$pagehook = add_management_page( __( 'Search &amp; Replace', FB_SAR_TEXTDOMAIN ), __( 'Search &amp; Replace', FB_SAR_TEXTDOMAIN ), 'update_core', FB_SAR_BASENAME, 'searchandreplace_page', '' );
+	add_action( 'load-plugins.php', 'searchandreplace_on_load' );
+	//wp_enqueue_script('jquery');
 	
 }
 
-
-if ( is_admin() ) {
-	add_action('init', 'searchandreplace_textdomain');
-	add_action('in_admin_footer', 'searchandreplace_admin_footer');
+/**
+ * init on wordpress
+ */
+function searchandreplace_init() {
+	add_action('admin_init', 'searchandreplace_textdomain');
 	add_action('admin_menu', 'searchandreplace_add_settings_page');
 	add_action('admin_print_scripts', 'searchandreplace_add_js_head' );
 }
+add_action( 'plugins_loaded', 'searchandreplace_init' );
+
 
 /* this does the important stuff! */
-function searchandreplace_doit($search_text,
-																$replace_text,
-																$content              = TRUE,
-																$guid                 = TRUE,
-																$id                   = TRUE,
-																$title                = TRUE,
-																$excerpt              = TRUE,
-																$meta_value           = TRUE,
-																$comment_content      = TRUE,
-																$comment_author       = TRUE,
-																$comment_author_email = TRUE,
-																$comment_author_url   = TRUE,
-																$comment_count        = TRUE,
-																$cat_description      = TRUE,
-																$tag                  = TRUE,
-																$user_id              = TRUE,
-																$user_login           = TRUE
-																) {
+function searchandreplace_doit(
+	$search_text,
+	$replace_text,
+	$all                  = TRUE,
+	$content              = TRUE,
+	$guid                 = TRUE,
+	$id                   = TRUE,
+	$title                = TRUE,
+	$excerpt              = TRUE,
+	$meta_value           = TRUE,
+	$comment_content      = TRUE,
+	$comment_author       = TRUE,
+	$comment_author_email = TRUE,
+	$comment_author_url   = TRUE,
+	$comment_count        = TRUE,
+	$cat_description      = TRUE,
+	$tag                  = TRUE,
+	$user_id              = TRUE,
+	$user_login           = TRUE
+	) {
 	global $wpdb;
 
 	$myecho = '';
@@ -170,11 +144,18 @@ function searchandreplace_doit($search_text,
 	$search_slug  = strtolower($search_text);
 	$replace_slug = strtolower($replace_text);
 	
-	if (!$content && !$id && !$guid && !$title && !$excerpt && !$meta_value && !$comment_content && !$comment_author && !$comment_author_email && !$comment_author_url && !$comment_count && !$cat_description && !$tag && !$user_id && !$user_login) {
+	if (!$all && !$content && !$id && !$guid && !$title && !$excerpt && !$meta_value && !$comment_content && !$comment_author && !$comment_author_email && !$comment_author_url && !$comment_count && !$cat_description && !$tag && !$user_id && !$user_login) {
 		return '<div class="error"><p><strong>' . __('Nothing (Checkbox) selected to modify!', FB_SAR_TEXTDOMAIN). '</strong></p></div><br class="clear" />';
 	}
 
-	$myecho .= '<div class="updated fade">' . "\n" . '<ul>';
+	// search at all
+	if ($all) {
+		$myecho .= "\n" . '<li>' . __('Looking @ all', FB_SAR_TEXTDOMAIN) . ' ...';
+		
+		$myecho .= "\n" . '<ul>' . "\n";
+		$myecho .= searchandreplace_all($search_text);
+		$myecho .= "\n" . '</ul>' . "\n" . '</li>' . "\n";
+	}
 	
 	// post content
 	if ($content) {
@@ -248,11 +229,17 @@ function searchandreplace_doit($search_text,
 		
 		$myecho .= "\n" . '<ul>' . "\n";
 		$myecho .= searchandreplace_results('post_title', 'posts', $search_text);
+		$myecho .= searchandreplace_results('post_name', 'posts', $search_text);
 		$myecho .= "\n" . '</ul>' . "\n" . '</li>' . "\n";
 		
 		$query  = "UPDATE $wpdb->posts ";
 		$query .= "SET post_title = ";
 		$query .= "REPLACE(post_title, \"$search_text\", \"$replace_text\") ";
+		$wpdb->get_results($query);
+		
+		$query  = "UPDATE $wpdb->posts ";
+		$query .= "SET post_name = ";
+		$query .= "REPLACE(post_name, \"$search_text\", \"$replace_text\") ";
 		$wpdb->get_results($query);
 	}
 	
@@ -439,9 +426,12 @@ function searchandreplace_doit($search_text,
 		$query .= "REPLACE(user_nicename, \"$search_slug\", \"$replace_slug\") ";
 		$wpdb->get_results($query);
 	}
-
-	$myecho .= "\n" . '</ul>' . "\n" . '</div><br class="clear"/>' . "\n";
-	return $myecho;
+	
+	$echo  = '<div class="updated fade">' . "\n" . '<ul>';
+	$echo .= $myecho;
+	$echo .= "\n" . '</ul>' . "\n" . '</div><br class="clear"/>' . "\n";
+	
+	return $echo;
 }
 
 /**
@@ -457,7 +447,7 @@ function searchandreplace_results($field, $table, $search_text) {
 	$myecho .= "\n" . '<li>';
 	$results = "SELECT $field FROM " . $wpdb->$table . " WHERE $field LIKE \"%$search_text%\"";
 	//$myecho .= $results . '<br />';
-	$myecho .= __('... in table ', FB_SAR_TEXTDOMAIN);
+	$myecho .= __('... in table', FB_SAR_TEXTDOMAIN) . ' ';
 	$myecho .= '<code>' . $table . '</code>,' . ' field <code>' . $field . '</code>: ';
 	$results = mysql_query($results);
 	$total_results = (int)( @mysql_num_rows($results) );
@@ -480,6 +470,191 @@ function searchandreplace_results($field, $table, $search_text) {
 		$myecho .= '</li>' . "\n";
 	}
 	return $myecho;
+}
+
+
+function searchandreplace_all($search_text) {
+	global $wpdb;
+	
+	if ( empty($wpdb->dbname) )
+		$wpdb->dbname = DB_NAME;
+	
+	$search_text = mysql_real_escape_string($search_text);
+	$result_in_tables = 0;
+	
+	$myecho = '
+	<script language="JavaScript">
+		var table_id = new Array();
+	
+		function hide_all() {
+			for(i=0;i<table_id.length;i++){
+				document.getElementById(table_id[i]).style.display = \'none\';
+			}
+		}
+		
+		function show_all() {
+			for(i=0;i<table_id.length;i++){
+				document.getElementById(table_id[i]).style.display = \'block\';
+			}
+		}
+		
+		function toggle(id) {
+			if (get_style(id,\'display\') == \'block\') {
+				document.getElementById(id).style.display = \'none\';
+			} else {
+				document.getElementById(id).style.display = \'block\';
+			}
+		}
+		
+		function get_style(el,styleProp) {
+			var x = document.getElementById(el);
+			if (x.currentStyle)
+				var y = x.currentStyle[styleProp];
+			else if (window.getComputedStyle)
+				var y = document.defaultView.getComputedStyle(x,null).getPropertyValue(styleProp);
+			return y;
+		}
+	</script>';
+	
+	$myecho .= '<p><a href="javascript:hide_all()">Collapse All</a> 
+		 <a href="javascript:show_all()">Expand All</a></p>';
+	$myecho .= '<p>Results for: <code>' . $search_text . '</code></p>';
+	
+	$sql= 'show tables';
+	$res = mysql_query($sql);
+	$tables = searchandreplace_fetch_array($res);
+	
+	for ($i=0; $i<sizeof($tables); $i++) {
+		//@abstract querry bliding of each table
+		$sql = 'select count(*) from '.$tables[$i]['Tables_in_'.$wpdb->dbname];
+		$res = mysql_query($sql);
+		
+		if (mysql_num_rows($res)>0) {
+			//@abstract taking the table data type information
+			$sql = 'desc '.$tables[$i]['Tables_in_'.$wpdb->dbname]; 
+			$res = mysql_query($sql);
+			$collum = searchandreplace_fetch_array($res);
+			
+			$search_sql = 'select * from '.$tables[$i]['Tables_in_'.$wpdb->dbname].' where ';
+			$no_varchar_field = 0;
+			
+			for ($j=0;$j<sizeof($collum);$j++) {
+					if ($no_varchar_field!=0){
+					$search_sql .= ' or ' ;
+					}
+					$search_sql .= '`'.$collum[$j]['Field'] .'` like \'%'.$search_text.'%\' ';
+					$no_varchar_field++;
+			}
+			
+			if ($no_varchar_field > 0) {
+				$res = mysql_query($search_sql);
+				$search_result = searchandreplace_fetch_array($res);
+				if ( sizeof($search_result) ) {
+					$result_in_tables++;
+				
+					$myecho .= '<p><strong>Table: </strong><code>' . $tables[$i]['Tables_in_'.$wpdb->dbname] . '</code> ... ';
+					$myecho .= 'Total Results for <code>"' . $search_text . '"</code>: <strong>'. mysql_affected_rows() . '</strong></p>';
+					$myecho .= '<p><a href="javascript:toggle(\'' . $tables[$i]['Tables_in_'.$wpdb->dbname].'_sql'.'\')">SQL</a></p>';
+					$myecho .= '<script language="JavaScript">
+						table_id.push("'.$tables[$i]['Tables_in_'.$wpdb->dbname].'_sql");
+					</script>';
+					$myecho .= '<div id="'.$tables[$i]['Tables_in_'.$wpdb->dbname].'_sql" style="display:none;"><code>'.$search_sql.'</code></div>';
+					$myecho .= '<p><a href="javascript:toggle(\''.$tables[$i]['Tables_in_'.$wpdb->dbname].'_wrapper'.'\')">Result</a></p>';
+					$myecho .= '<script language="JavaScript">
+						table_id.push("'.$tables[$i]['Tables_in_'.$wpdb->dbname].'_wrapper");
+					</script>';
+					$myecho .= '<div id="'.$tables[$i]['Tables_in_'.$wpdb->dbname].'_wrapper" style="display:none;">';
+					
+					$myecho .= searchandreplace_table_arrange($search_result);
+					$myecho .= '</div>';
+				}// @endof showing found search  
+				
+			}
+		}
+	}
+	
+	if (!$result_in_tables) {
+		$myecho = '<p style="color:red;">Sorry, <code>'.
+			$search_text . '</code> ' . 
+			__( 'is not found in this Database', FB_SAR_TEXTDOMAIN ) . 
+			'(<code>' . $wpdb->dbname . '</code>)!</p>';
+	}
+	
+	return $myecho;
+}
+
+/**
+ * @method    fetch_array
+ * @abstract taking the mySQL $resource id and fetch and return the result array
+ * @param   string| MySQL resouser 
+ * @return  array  
+ */
+function searchandreplace_fetch_array($res) {
+	$data = array();
+	while ($row = mysql_fetch_assoc($res)) {
+		$data[] = $row;
+	}
+	
+	return $data;
+}
+
+/**
+ * @method  table_arrange
+ * @abstract taking the mySQL the result array and return html Table in a string. showing the search content in a diffrent css class.
+ * @param  array 
+ * @post_data  search_text
+ * @return  string | html table
+ */
+function searchandreplace_table_arrange($array) {
+	
+	$table_data = ''; // @abstract  returning table
+	$max = 0; // @abstract  max lenth of a row
+	$max_i = 0; // @abstract  number of the row which is maximum max lenth of a row
+	
+	$search_text = $_POST["search_text"];
+	
+	for ($i=0;$i<sizeof($array);$i++) {
+		//@abstract table row 
+		$table_data .= '<tr class='.(($i&1)?'"alternate"':'""') .' >';
+		$j=0;
+		
+		foreach($array[$i] as $key => $data) {
+			$data = preg_replace("|($search_text)|Ui" , "<code style=\"background:#ffc516;padding:0 4px;\"><b>$1</b></code>" , htmlspecialchars($data));
+			$table_data .= '<td>'. $data .' &nbsp;</td>';
+			$j++;
+		}
+		
+		if($max<$j)
+		{
+			$max = $j;
+			$max_i = $i;
+		}
+		$table_data .= '</tr>'."\n";
+	}
+	
+	unset($data);
+	// @endof html table
+	
+	//@abstract populating the table head
+	
+	// @varname $data_a
+	//@abstract  taking the highest sized array and printing the key name.
+	$data_a = $array[$max_i];
+	
+	$table_head = '<tr>';
+		foreach($data_a as $key => $value) {
+			$table_head .= '<th>'. $key.'</th>';
+		}
+			
+	$table_head .= '</tr>'."\n";
+	
+	// @abstract printing the table data
+	return '<div class="table_bor">
+		<table class="widefat">'
+		 . '<thead>' . $table_head . '</thead>'
+		 . '<tbody>' . $table_data . '</tbody>'
+		 . '</table>
+		</div>';
 }
 
 
@@ -516,29 +691,33 @@ function searchandreplace_action() {
 		} else {
 			$myecho .= '<div class="updated fade">';
 			$myecho .= '<p><strong>&raquo; ' . __('Attempting to perform search and replace ...', FB_SAR_TEXTDOMAIN) . '</strong></p>';
-			$myecho .= '<p>&raquo; ' . __('Search', FB_SAR_TEXTDOMAIN) . ' <code>' . $_POST['search_text'] . '</code> ... ' . __('and replace with', FB_SAR_TEXTDOMAIN) . ' <code>' . $_POST['replace_text'] . '</code></p>';
+			$myecho .= '<p>&raquo; ' . __('Search', FB_SAR_TEXTDOMAIN) . ' <code>' . $_POST['search_text'] . '</code>';
+			if ( isset($_POST['replace_text']) )
+				$myecho .= ' ... ' . __('and replace with', FB_SAR_TEXTDOMAIN) . ' <code>' . $_POST['replace_text'] . '</code></p>';
 			$myecho .= '</div><br class="clear" />';
-	
+			
+			if ( !isset($_POST['replace_text']) )
+				$_POST['replace_text'] = NULL;
 			$error = searchandreplace_doit(
-																		$_POST['search_text'],
-																		$_POST['replace_text'],
-																		isset($_POST['content']),
-																		isset($_POST['guid']),
-																		isset($_POST['id']),
-																		isset($_POST['title']),
-																		isset($_POST['excerpt']),
-																		isset($_POST['meta_value']),
-																		isset($_POST['comment_content']),
-																		isset($_POST['comment_author']),
-																		isset($_POST['comment_author_email']),
-																		isset($_POST['comment_author_url']),
-																		isset($_POST['comment_count']),
-																		isset($_POST['cat_description']),
-																		isset($_POST['tag']),
-																		isset($_POST['user_id']),
-																		isset($_POST['user_login'])
-																		);
-											
+				$_POST['search_text'],
+				$_POST['replace_text'],
+				isset($_POST['all']),
+				isset($_POST['content']),
+				isset($_POST['guid']),
+				isset($_POST['id']),
+				isset($_POST['title']),
+				isset($_POST['excerpt']),
+				isset($_POST['meta_value']),
+				isset($_POST['comment_content']),
+				isset($_POST['comment_author']),
+				isset($_POST['comment_author_email']),
+				isset($_POST['comment_author_url']),
+				isset($_POST['comment_count']),
+				isset($_POST['cat_description']),
+				isset($_POST['tag']),
+				isset($_POST['user_id']),
+				isset($_POST['user_login'])
+			);
 			
 			if ($error != '') {
 				$myecho .= $error;
@@ -571,10 +750,27 @@ function searchandreplace_page() {
 			<div class="postbox">
 				<h3><?php _e('Information Search &amp; Replace', FB_SAR_TEXTDOMAIN) ?></h3>
 				<div class="inside">
-					
-					<p><?php _e('This plugin uses an standard SQL query so it modifies your database directly!<br /><strong>Attention: </strong>You <strong>cannot</strong> undo any changes made by this plugin. <strong>It is therefore advisable to <a href="http://bueltge.de/wp-datenbank-backup-mit-phpmyadmin/97/" title=\"click for tutorial\">backup your database</a> before running this plugin.</strong> No legal claims to the author of this plugin! <strong>Aktivate</strong> the plugin <strong>only</strong>, if you want to use it!', FB_SAR_TEXTDOMAIN); ?></p>
+					<p><?php _e('This plugin uses an standard SQL query so it modifies your database directly!<br /><strong>Attention: </strong>You <strong>cannot</strong> undo any changes made by this plugin. <strong>It is therefore advisable to backup your database before running this plugin.</strong> No legal claims to the author of this plugin! <strong>Activate</strong> the plugin <strong>only</strong>, if you want to use it!', FB_SAR_TEXTDOMAIN); ?></p>
 					<p><?php _e('Text search is case sensitive and has no pattern matching capabilites. This replace function matchs raw text so it can be used to replace HTML tags too.', FB_SAR_TEXTDOMAIN); ?></p>
-
+					<p><?php _e( '<strong>Step One:</strong> Use the follow search for a better information with return the sql-query and tables with the results. The search use alle fields in all tables! After this you have more informations and you can use the replace function.', FB_SAR_TEXTDOMAIN ); ?></p>
+					<form name="search" action="" method="post">
+						<?php wp_nonce_field('searchandreplace_nonce') ?>
+						<table summary="config" class="widefat">
+							<tr>
+								<th><label for="all_label"><?php _e('All - only search!', FB_SAR_TEXTDOMAIN); ?></label></th>
+								<td><input type='checkbox' name='all' id='all_label' />
+								 <label for="all_label"><?php _e('field:', FB_SAR_TEXTDOMAIN); ?> <code>*</code> <?php _e('table:', FB_SAR_TEXTDOMAIN); ?> <code>*</code></label></td>
+							</tr>
+							<tr>
+								<th><?php _e('Search for', FB_SAR_TEXTDOMAIN); ?></th>
+								<td><input class="code" type="text" name="search_text" value="" size="80" /></td>
+							</tr>
+						</table>
+						<p class="submit">
+							<input class="button" type="submit" value="<?php _e('Go', FB_SAR_TEXTDOMAIN); ?> &raquo;" />
+							<input type="hidden" name="submitted" />
+						</p>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -587,7 +783,7 @@ function searchandreplace_page() {
 					<form name="replace" action="" method="post">
 						<?php wp_nonce_field('searchandreplace_nonce') ?>
 						<table summary="config" class="widefat">
-							<tr class="form-invalid">
+							<tr class="alternate">
 								<th><label for="content_label"><?php _e('Content', FB_SAR_TEXTDOMAIN); ?></label></th>
 								<td colspan="2" style="text-align: center;"><input type='checkbox' name='content' id='content_label' /></td>
 								<td><label for="content_label"><?php _e('field:', FB_SAR_TEXTDOMAIN); ?> <code>post_content</code> <?php _e('table:', FB_SAR_TEXTDOMAIN); ?> <code>_posts</code></label></td>
@@ -597,17 +793,17 @@ function searchandreplace_page() {
 								<td colspan="2" style="text-align: center;"><input type='checkbox' name='guid' id='guid_label' /></td>
 								<td><label for="guid_label"><?php _e('field:', FB_SAR_TEXTDOMAIN); ?> <code>guid</code> <?php _e('table:', FB_SAR_TEXTDOMAIN); ?> <code>_posts</code></label></td>
 							</tr>
-							<tr class="form-invalid">
+							<tr class="alternate">
 								<th><label for="title_label"><?php _e('Titles', FB_SAR_TEXTDOMAIN); ?></label></th>
 								<td colspan="2" style="text-align: center;"><input type='checkbox' name='title' id='title_label' /></td>
-								<td><label for="title_label"><?php _e('field:', FB_SAR_TEXTDOMAIN); ?> <code>post_title</code> <?php _e('table:', FB_SAR_TEXTDOMAIN); ?> <code>_posts</code></label></td>
+								<td><label for="title_label"><?php _e('field:', FB_SAR_TEXTDOMAIN); ?> <code>post_title</code>, <code>post_name</code> <?php _e('table:', FB_SAR_TEXTDOMAIN); ?> <code>_posts</code></label></td>
 							</tr>
 							<tr>
 								<th><label for="excerpt_label"><?php _e('Excerpts', FB_SAR_TEXTDOMAIN); ?></label></th>
 								<td colspan="2" style="text-align: center;"><input type='checkbox' name='excerpt' id='excerpt_label' /></td>
 								<td><label for="excerpt_label"><?php _e('field:', FB_SAR_TEXTDOMAIN); ?> <code>post_excerpt</code> <?php _e('table:', FB_SAR_TEXTDOMAIN); ?> <code>_posts</code></label></td>
 							</tr>
-							<tr class="form-invalid">
+							<tr class="alternate">
 								<th><label for="meta_value_label"><?php _e('Meta Data', FB_SAR_TEXTDOMAIN); ?></label></th>
 								<td colspan="2" style="text-align: center;"><input type='checkbox' name='meta_value' id='meta_value_label' /></td>
 								<td><label for="meta_value_label"><?php _e('field:', FB_SAR_TEXTDOMAIN); ?> <code>meta_value</code> <?php _e('table:', FB_SAR_TEXTDOMAIN); ?> <code>_postmeta</code></label></td>
@@ -617,7 +813,7 @@ function searchandreplace_page() {
 								<td colspan="2" style="text-align: center;"><input type='checkbox' name='comment_content' id='comment_content_label' /></td>
 								<td><label for="comment_content_label"><?php _e('field:', FB_SAR_TEXTDOMAIN); ?> <code>comment_content</code> <?php _e('table:', FB_SAR_TEXTDOMAIN); ?> <code>_comments</code></label></td>
 							</tr>
-							<tr class="form-invalid">
+							<tr class="alternate">
 								<th><label for="comment_author_label"><?php _e('Comments author', FB_SAR_TEXTDOMAIN); ?></label></th>
 								<td colspan="2" style="text-align: center;"><input type='checkbox' name='comment_author' id='comment_author_label' /></td>
 								<td><label for="comment_author_label"><?php _e('field:', FB_SAR_TEXTDOMAIN); ?> <code>comment_author</code> <?php _e('table:', FB_SAR_TEXTDOMAIN); ?> <code>_comments</code></label></td>
@@ -627,7 +823,7 @@ function searchandreplace_page() {
 								<td colspan="2" style="text-align: center;"><input type='checkbox' name='comment_author_email' id='comment_author_email_label' /></td>
 								<td><label for="comment_author_email_label"><?php _e('field:', FB_SAR_TEXTDOMAIN); ?> <code>comment_author_email</code> <?php _e('table:', FB_SAR_TEXTDOMAIN); ?> <code>_comments</code></label></td>
 							</tr>
-							<tr class="form-invalid">
+							<tr class="alternate">
 								<th><label for="comment_author_url_label"><?php _e('Comments author URL', FB_SAR_TEXTDOMAIN); ?></label></th>
 								<td colspan="2" style="text-align: center;"><input type='checkbox' name='comment_author_url' id='comment_author_url_label' /></td>
 								<td><label for="comment_author_url_label"><?php _e('field:', FB_SAR_TEXTDOMAIN); ?> <code>comment_author_url</code> <?php _e('table:', FB_SAR_TEXTDOMAIN); ?> <code>_comments</code></label></td>
@@ -637,7 +833,7 @@ function searchandreplace_page() {
 								<td colspan="2" style="text-align: center;"><input type='checkbox' name='comment_count' id='comment_count_label' /></td>
 								<td><label for="comment_count_label"><?php _e('field:', FB_SAR_TEXTDOMAIN); ?> <code>comment_count</code> <?php _e('table:', FB_SAR_TEXTDOMAIN); ?> <code>_posts</code></label></td>
 							</tr>
-							<tr class="form-invalid">
+							<tr class="alternate">
 								<th><label for="cat_description_label"><?php _e('Category description', FB_SAR_TEXTDOMAIN); ?></label></th>
 								<td colspan="2" style="text-align: center;"><input type='checkbox' name='cat_description' id='cat_description_label' /></td>
 								<td><label for="cat_description_label"><?php _e('field:', FB_SAR_TEXTDOMAIN); ?> <code>description</code> <?php _e('table:', FB_SAR_TEXTDOMAIN); ?> <code>_term_taxonomy</code></label></td>
@@ -647,7 +843,7 @@ function searchandreplace_page() {
 								<td colspan="2" style="text-align: center;"><input type='checkbox' name='tag' id='tag_label' /></td>
 								<td><label for="tag_label"><?php _e('field:', FB_SAR_TEXTDOMAIN); ?> <code>name</code> <?php _e('and', FB_SAR_TEXTDOMAIN); ?> <code>slug</code> <?php _e('table:', FB_SAR_TEXTDOMAIN); ?> <code>_terms</code></label></td>
 							</tr>
-							<tr class="form-invalid">
+							<tr class="alternate">
 								<th><label for="user_id_label"><?php _e('User-ID', FB_SAR_TEXTDOMAIN); ?></label></th>
 								<td colspan="2" style="text-align: center;"><input type='checkbox' name='user_id' id='user_id_label' /></td>
 								<td><label for="user_id_label"><?php _e('field:', FB_SAR_TEXTDOMAIN); ?> <code>ID</code>, <code>user_id</code>, <code>post_author</code> <?php _e('and', FB_SAR_TEXTDOMAIN); ?> <code>link_owner</code><br /><?php _e('table:', FB_SAR_TEXTDOMAIN); ?><code>_users</code>, <code>_usermeta</code>, <code>_posts</code> <?php _e('and', FB_SAR_TEXTDOMAIN); ?> <code>_links</code></label></td>
@@ -658,7 +854,7 @@ function searchandreplace_page() {
 								<td><label for="user_login_label"><?php _e('field:', FB_SAR_TEXTDOMAIN); ?> <code>user_login</code> <?php _e('and', FB_SAR_TEXTDOMAIN); ?> <code>user_nicename</code> table: <code>_users</code></label></td>
 							</tr>
 							<?php if ($wpdb && mysql_num_rows(mysql_query("SHOW TABLES LIKE '" . $wpdb->prefix . 'terms'."'") ) == 1) { ?>
-							<tr class="form-invalid">
+							<tr class="alternate">
 								<th><label for="id_label"><?php _e('ID', FB_SAR_TEXTDOMAIN); ?></label></th>
 								<td colspan="2" style="text-align: center;"><input type='checkbox' name='id' id='id_label' /></td>
 								<td><label for="id_label"><?php _e('field:', FB_SAR_TEXTDOMAIN); ?> <code>ID</code>, <code>post_parent</code>, <code>post_id</code>, <code>object_id</code> <?php _e('and', FB_SAR_TEXTDOMAIN); ?> <code>comments</code><br /><?php _e('table:', FB_SAR_TEXTDOMAIN); ?> <code>_posts</code>, <code>_postmeta</code>, <code>_term_relationships</code> <?php _e('and', FB_SAR_TEXTDOMAIN); ?> <code>_comment_post_ID</code></label></td>
@@ -673,11 +869,11 @@ function searchandreplace_page() {
 
 						<table summary="submit" class="form-table">
 							<tr>
-								<th><?php _e('Replace', FB_SAR_TEXTDOMAIN); ?></th>
+								<th><?php _e('Search for', FB_SAR_TEXTDOMAIN); ?></th>
 								<td><input class="code" type="text" name="search_text" value="" size="80" /></td>
 							</tr>
 							<tr>
-								<th><?php _e('with', FB_SAR_TEXTDOMAIN); ?></th>
+								<th><?php _e('Replaced with', FB_SAR_TEXTDOMAIN); ?></th>
 								<td><input class="code" type="text" name="replace_text" value="" size="80" /></td>
 							</tr>
 						</table>
@@ -700,16 +896,6 @@ function searchandreplace_page() {
 				</div>
 			</div>
 		</div>
-
-		<script type="text/javascript">
-		<!--
-		jQuery('.postbox h3').prepend('<a class="togbox">+</a> ');
-		jQuery('.postbox h3').click( function() { jQuery(jQuery(this).parent().get(0)).toggleClass('closed'); } );
-		jQuery('.postbox.close-me').each(function(){
-			jQuery(this).addClass("closed");
-		});
-		//-->
-		</script>
 
 </div>
 <?php } ?>
