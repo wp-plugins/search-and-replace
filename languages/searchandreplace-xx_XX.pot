@@ -1,0 +1,308 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Search and Replace\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-06-11 17:38+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Frank Bueltge <frank@bueltge.de>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2;plural=n != 1;\n"
+"X-Poedit-Language: Danish\n"
+"X-Poedit-Country: DENMARK\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;__ngettext:1,2;__ngettext_noop:1,2;_nc:4c,1,2;_nx:4c,1,2;_n_noop:1,2;_nx_noop:4c,1,2;_x:1,2c;_c;esc_html__;esc_html_e;esc_html_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c\n"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:72
+msgid "Visit plugin homepage"
+msgstr "Besuche die Plugin-Webseite"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:75
+msgid "plugin"
+msgstr "plugin"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:75
+msgid "Version"
+msgstr "Version"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:75
+msgid "History"
+msgstr "Historie"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:75
+msgid "Author"
+msgstr "Autor"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:96
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:118
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:132
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:560
+msgid "Search &amp; Replace"
+msgstr "Suchen &amp; Ersetzen"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:174
+msgid "Nothing (Checkbox) selected to modify!"
+msgstr "<strong>Keine Aktion (Checkbox) gew&auml;hlt um zu ersetzen!</strong>"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:181
+msgid "Looking @ post content"
+msgstr "Suche nach Beitr&auml;gen"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:195
+msgid "Looking @ ID"
+msgstr "Suche nach ID"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:233
+msgid "Looking @ GUID"
+msgstr "Suche nach <acronym title=\"Global Unique Identifier\">GUID</acronym>"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:247
+msgid "Looking @ Titeln"
+msgstr "Suche nach Titeln"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:261
+msgid "Looking @ post excerpts"
+msgstr "Suche nach Auszügen"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:275
+msgid "Looking @ Meta Daten"
+msgstr "Suche nach Metadaten"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:289
+msgid "Looking @ modifying comments text"
+msgstr "Suche nach modifizierten Kommentartexten"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:303
+msgid "Looking @ modifying comments author"
+msgstr "Suche nach modifizierten Kommentarautoren"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:317
+msgid "Looking @ modifying comments author e-mail"
+msgstr "Suche nach modifizierten Kommentarautoren E-Mail-Adressen"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:331
+msgid "Looking @ modifying comments author URLs"
+msgstr "Suche nach modifizierten Kommentarautoren URLs"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:345
+msgid "Looking @ Comment-Count"
+msgstr "Suche nach Kommentarzähler"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:359
+msgid "Looking @ category description"
+msgstr "Suche nach Kategoriebeschreibung"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:373
+msgid "Looking @ Tags"
+msgstr "Suche nach Tags"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:393
+msgid "Looking @ User-ID"
+msgstr "Suche nach User-ID"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:425
+msgid "Looking @ User Login"
+msgstr "Suche nach User-Login"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:460
+msgid "... in table "
+msgstr "... in Tabellen "
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:466
+msgid "The inquiry could not be implemented:"
+msgstr "Die Anfrage konnte nicht ausgef&uuml;hrt werden:"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:479
+msgid "entries found."
+msgstr "Eintr&auml;ge gefunden."
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:515
+msgid "You must specify some text to replace!"
+msgstr "Du musst Text spezifizieren, um Text zu ersetzen!"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:518
+msgid "Attempting to perform search and replace ..."
+msgstr "Versuche die Suche duchzuf&uuml;hren und zu ersetzen ..."
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:519
+msgid "Search"
+msgstr "Suche"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:519
+msgid "and replace with"
+msgstr "und ersetze mit"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:546
+msgid "Completed successfully!"
+msgstr "Erfolgreich durchgef&uuml;hrt!"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:566
+msgid "You do not have sufficient permissions to edit plugins for this blog."
+msgstr "Du hast keine ausreichenden Rechte um das Plugin für dieses Blog zu editieren."
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:572
+msgid "Information Search &amp; Replace"
+msgstr "Hinweise Suchen &amp; Ersetzen"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:575
+msgid "This plugin uses an standard SQL query so it modifies your database directly!<br /><strong>Attention: </strong>You <strong>cannot</strong> undo any changes made by this plugin. <strong>It is therefore advisable to <a href=\"http://bueltge.de/wp-datenbank-backup-mit-phpmyadmin/97/\" title=\\\"click for tutorial\\\">backup your database</a> before running this plugin.</strong> No legal claims to the author of this plugin! <strong>Aktivate</strong> the plugin <strong>only</strong>, if you want to use it!"
+msgstr "Dieses Plugin arbeitet mit einer Standard SQL Abfrage und ver&auml;ndert deine Datenbank direkt!<br /><strong>Achtung: </strong>Du <strong>kannst nichts</strong> r&uuml;ckg&auml;ngig machen mit diesem Plugin. <strong>Fertige eine <a href=\"http://bueltge.de/wp-datenbank-backup-mit-phpmyadmin/97/\" title=\"Klick zum Tutorial\">Sicherung deiner Datenbank</a> im Vorfeld an.</strong> Keine Rechtsanspr&uuml;che an den Autor des Plugins! <strong>Aktiviere</strong> das Plugin <strong>nur</strong>, wenn es ben&ouml;tigt wird!\"msgstr \"This plugin uses an standard SQL query so it modifies your database directly!<br /><strong>Attention: </strong>You <strong>cannot</strong> undo any changes made by this plugin. <strong>It is therefore advisable to <a href=\"http://bueltge.de/wp-datenbank-backup-mit-phpmyadmin/97/\" title=\"click for tutorial\">backup your database</a> before running this plugin.</strong> No legal claims to the author of this plugin! <strong>Aktivate</strong> the plugin <strong>only</strong>, if you want to use it!"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:576
+msgid "Text search is case sensitive and has no pattern matching capabilites. This replace function matchs raw text so it can be used to replace HTML tags too."
+msgstr "Die Textsuche ist sensitiv und besitzt keine passende Abstimmungsbef&auml;higung. Die Funktion arbeitet stringbasierend und kann somit auch HTML-Tags ersetzen."
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:584
+msgid "Search in"
+msgstr "Suche in"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:591
+msgid "Content"
+msgstr "Beitr&auml;gen"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:593
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:598
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:603
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:608
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:613
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:618
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:623
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:628
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:633
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:638
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:643
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:648
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:653
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:658
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:664
+msgid "field:"
+msgstr "Feld:"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:593
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:598
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:603
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:608
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:613
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:618
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:623
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:628
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:633
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:638
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:643
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:648
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:653
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:664
+msgid "table:"
+msgstr "Tabelle:"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:596
+msgid "GUID"
+msgstr "<acronym title=\"Global Unique Identifier\">GUID</acronym>"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:601
+msgid "Titles"
+msgstr "Title"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:606
+msgid "Excerpts"
+msgstr "Auszüge"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:611
+msgid "Meta Data"
+msgstr "Metadaten"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:616
+msgid "Comments content"
+msgstr "Kommentarbeitr&auml;gen"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:621
+msgid "Comments author"
+msgstr "Kommentarautorens"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:626
+msgid "Comments author e-mail"
+msgstr "Kommentarautoren-E-Mail"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:631
+msgid "Comments author URL"
+msgstr "Kommentarautoren-URL"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:636
+msgid "Comments-Counter"
+msgstr "Kommentar-Zähler"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:641
+msgid "Category description"
+msgstr "Kategoriebeschreibung"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:646
+msgid "Tags &amp; Categories"
+msgstr "Tags &amp; Kategorien"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:648
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:653
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:658
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:664
+msgid "and"
+msgstr "und"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:651
+msgid "User-ID"
+msgstr "User-ID"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:656
+msgid "User-login"
+msgstr "User-Login"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:662
+msgid "ID"
+msgstr "ID"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:669
+msgid "Checkboxes to assign"
+msgstr "Checkboxen markieren"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:669
+msgid "all"
+msgstr "alle"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:669
+msgid "Checkboxes to unmask"
+msgstr "Checkboxen demarkieren"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:669
+msgid "none"
+msgstr "keine"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:676
+msgid "Replace"
+msgstr "Ersetze"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:680
+msgid "with"
+msgstr "mit"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:685
+msgid "Go"
+msgstr "Start"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:696
+msgid "Information on the plugin"
+msgstr "Hinweise zum Plugin"
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:698
+msgid "&quot;Search and Replace&quot; originalplugin (en) created by <a href=\"http://thedeadone.net/\">Mark Cunningham</a> and provided (comments) by durch <a href=\"http://www.gonahkar.com\">Gonahkar</a>.<br />&quot;Search &amp; Replace&quot;, current version provided by <a href=\"http://bueltge.de\">Frank Bueltge</a>."
+msgstr "&quot;Search and Replace&quot; Originalplugin (en) ist von <a href='http://thedeadone.net/'>Mark Cunningham</a> und wurde erweitert (Kommentarbeitr&auml;ge, Kommentarautor) durch <a href='http://www.gonahkar.com'>Gonahkar</a>.<br />&quot;Suchen &amp; Ersetzen&quot; wurde erweitert und gepflegt in der aktuellen Version durch <a href='http://bueltge.de'>Frank Bueltge</a>."
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:699
+msgid "Further information: Visit the <a href=\"http://bueltge.de/wp-suchen-und-ersetzen-de-plugin/114/\">plugin homepage</a> for further information or to grab the latest version of this plugin."
+msgstr "Weitere Informationen: Besuche die <a href='http://bueltge.de/wp-suchen-und-ersetzen-de-plugin/114'>plugin homepage</a> f&uuml;r weitere Informationen oder nutze die letzte Version des Plugins."
+
+#: d:\wordpress\plugins\search-and-replace/search-and-replace.php:699
+msgid "You want to thank me? Visit my <a href=\"http://bueltge.de/wunschliste\">wishlist</a>."
+msgstr "Du willst Danke sagen? Besuche meine <a href='http://bueltge.de/wunschliste'>Wunschliste</a>."
+
