@@ -4,7 +4,7 @@ Donate link: http://bueltge.de/wunschliste/
 Tags: database, mysql, search, replace, admin, security
 Requires at least: 1.5
 Tested up to: 3.1
-Stable tag: 2.6.0
+Stable tag: 2.6.1
 
 A simple search for find strings in your database and replace the string.
 
@@ -48,6 +48,10 @@ The plugin comes with various translations, please refer to the [WordPress Codex
 
 
 == Changelog ==
+= v2.6.1 (01/25/2011) =
+* Feature: Add Signups-Table for WP MU
+* Maintenance: check for tables, PHP Warning fix 
+
 = v2.6.0 (01/03/2011) =
 * Feature: add an new search for find strings (maybe a new way for search strings)
 * Maintenance: small changes on source
