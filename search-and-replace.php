@@ -7,7 +7,7 @@ Plugin URI: http://bueltge.de/wp-suchen-und-ersetzen-de-plugin/114/
 Description: A simple search for find strings in your database and replace the string. 
 Author: Frank B&uuml;ltge
 Author URI: http://bueltge.de/
-Version: 2.6.1
+Version: 2.6.2
 License: GPL
 Donate URI: http://bueltge.de/wunschliste/
 */
@@ -96,10 +96,10 @@ function searchandreplace_filter_plugin_meta($links, $file) {
  */
 function searchandreplace_add_settings_page() {
 
-	if ( !current_user_can('update_core') )
+	if ( !current_user_can('manage_options') )
 		return;
 	
-	$pagehook = add_management_page( __( 'Search &amp; Replace', FB_SAR_TEXTDOMAIN ), __( 'Search &amp; Replace', FB_SAR_TEXTDOMAIN ), 'update_core', FB_SAR_BASENAME, 'searchandreplace_page', '' );
+	$pagehook = add_management_page( __( 'Search &amp; Replace', FB_SAR_TEXTDOMAIN ), __( 'Search &amp; Replace', FB_SAR_TEXTDOMAIN ), 'manage_options', FB_SAR_BASENAME, 'searchandreplace_page', '' );
 	add_action( 'load-plugins.php', 'searchandreplace_on_load' );
 	//wp_enqueue_script('jquery');
 	
@@ -157,7 +157,7 @@ function searchandreplace_doit(
 		$myecho .= "\n" . '<li>' . __('Looking @ all', FB_SAR_TEXTDOMAIN) . ' ...';
 		
 		$myecho .= "\n" . '<ul>' . "\n";
-		$myecho .= searchandreplace_all($search_text);
+		$myecho .= searchandreplace_sall($search_text);
 		$myecho .= "\n" . '</ul>' . "\n" . '</li>' . "\n";
 	}
 	
@@ -491,7 +491,7 @@ function searchandreplace_results($field, $table, $search_text) {
 }
 
 
-function searchandreplace_all($search_text) {
+function searchandreplace_sall($search_text) {
 	global $wpdb;
 	
 	if ( empty($wpdb->dbname) )
@@ -538,30 +538,30 @@ function searchandreplace_all($search_text) {
 		 <a href="javascript:show_all()">Expand All</a></p>';
 	$myecho .= '<p>Results for: <code>' . $search_text . '</code></p>';
 	
-	$sql= 'show tables';
+	$sql = 'show tables';
 	$res = mysql_query($sql);
 	$tables = searchandreplace_fetch_array($res);
 	
-	for ($i=0; $i<sizeof($tables); $i++) {
+	for ($i=0; $i < sizeof($tables); $i++) {
 		//@abstract querry bliding of each table
-		$sql = 'select count(*) from '.$tables[$i]['Tables_in_'.$wpdb->dbname];
+		$sql = 'select count(*) from ' . $tables[$i]['Tables_in_' . $wpdb->dbname];
 		$res = mysql_query($sql);
 		
-		if (mysql_num_rows($res)>0) {
+		if (mysql_num_rows($res) > 0) {
 			//@abstract taking the table data type information
-			$sql = 'desc '.$tables[$i]['Tables_in_'.$wpdb->dbname]; 
+			$sql = 'desc ' . $tables[$i]['Tables_in_' . $wpdb->dbname]; 
 			$res = mysql_query($sql);
 			$collum = searchandreplace_fetch_array($res);
 			
-			$search_sql = 'select * from '.$tables[$i]['Tables_in_'.$wpdb->dbname].' where ';
+			$search_sql = 'select * from ' . $tables[$i]['Tables_in_' . $wpdb->dbname] . ' where ';
 			$no_varchar_field = 0;
 			
-			for ($j=0;$j<sizeof($collum);$j++) {
-					if ($no_varchar_field!=0){
+			for ($j=0; $j < sizeof($collum); $j++) {
+				if ($no_varchar_field != 0){
 					$search_sql .= ' or ' ;
-					}
-					$search_sql .= '`'.$collum[$j]['Field'] .'` like \'%'.$search_text.'%\' ';
-					$no_varchar_field++;
+				}
+				$search_sql .= '`' . $collum[$j]['Field'] . '` like \'%' . $search_text . '%\' ';
+				$no_varchar_field++;
 			}
 			
 			if ($no_varchar_field > 0) {
@@ -574,14 +574,14 @@ function searchandreplace_all($search_text) {
 					$myecho .= 'Total Results for <code>"' . $search_text . '"</code>: <strong>'. mysql_affected_rows() . '</strong></p>';
 					$myecho .= '<p><a href="javascript:toggle(\'' . $tables[$i]['Tables_in_'.$wpdb->dbname].'_sql'.'\')">SQL</a></p>';
 					$myecho .= '<script language="JavaScript">
-						table_id.push("'.$tables[$i]['Tables_in_'.$wpdb->dbname].'_sql");
+						table_id.push("' . $tables[$i]['Tables_in_' . $wpdb->dbname] . '_sql");
 					</script>';
-					$myecho .= '<div id="'.$tables[$i]['Tables_in_'.$wpdb->dbname].'_sql" style="display:none;"><code>'.$search_sql.'</code></div>';
-					$myecho .= '<p><a href="javascript:toggle(\''.$tables[$i]['Tables_in_'.$wpdb->dbname].'_wrapper'.'\')">Result</a></p>';
+					$myecho .= '<div id="' . $tables[$i]['Tables_in_' . $wpdb->dbname] . '_sql" style="display:none;"><code>' . $search_sql . '</code></div>';
+					$myecho .= '<p><a href="javascript:toggle(\'' . $tables[$i]['Tables_in_' . $wpdb->dbname] . '_wrapper' . '\')">Result</a></p>';
 					$myecho .= '<script language="JavaScript">
-						table_id.push("'.$tables[$i]['Tables_in_'.$wpdb->dbname].'_wrapper");
+						table_id.push("' . $tables[$i]['Tables_in_' . $wpdb->dbname] . '_wrapper");
 					</script>';
-					$myecho .= '<div id="'.$tables[$i]['Tables_in_'.$wpdb->dbname].'_wrapper" style="display:none;">';
+					$myecho .= '<div id="' . $tables[$i]['Tables_in_' . $wpdb->dbname] . '_wrapper" style="display:none;">';
 					
 					$myecho .= searchandreplace_table_arrange($search_result);
 					$myecho .= '</div>';
@@ -591,7 +591,7 @@ function searchandreplace_all($search_text) {
 		}
 	}
 	
-	if (!$result_in_tables) {
+	if ( ! $result_in_tables ) {
 		$myecho = '<p style="color:red;">Sorry, <code>'.
 			$search_text . '</code> ' . 
 			__( 'is not found in this Database', FB_SAR_TEXTDOMAIN ) . 
@@ -602,10 +602,10 @@ function searchandreplace_all($search_text) {
 }
 
 /**
- * @method    fetch_array
+ * @method   searchandreplace_fetch_array
  * @abstract taking the mySQL $resource id and fetch and return the result array
- * @param   string| MySQL resouser 
- * @return  array  
+ * @param    string| MySQL resouser 
+ * @return   array  
  */
 function searchandreplace_fetch_array($res) {
 	$data = array();
@@ -617,37 +617,37 @@ function searchandreplace_fetch_array($res) {
 }
 
 /**
- * @method  table_arrange
- * @abstract taking the mySQL the result array and return html Table in a string. showing the search content in a diffrent css class.
- * @param  array 
+ * @method     searchandreplace_table_arrange
+ * @abstract   taking the mySQL the result array and return html Table in a string. showing the search content in a diffrent css class.
+ * @param      array 
  * @post_data  search_text
- * @return  string | html table
+ * @return     string | html table
  */
 function searchandreplace_table_arrange($array) {
 	
-	$table_data = ''; // @abstract  returning table
-	$max = 0; // @abstract  max lenth of a row
-	$max_i = 0; // @abstract  number of the row which is maximum max lenth of a row
+	$table_data = ''; // @abstract	returning table
+	$max = 0; // @abstract	max lenth of a row
+	$max_i = 0; // @abstract	number of the row which is maximum max lenth of a row
 	
 	$search_text = $_POST["search_text"];
 	
-	for ($i=0;$i<sizeof($array);$i++) {
+	for ($i=0; $i < sizeof($array); $i++) {
 		//@abstract table row 
-		$table_data .= '<tr class='.(($i&1)?'"alternate"':'""') .' >';
+		$table_data .= '<tr class=' . ( ($i&1) ? '"alternate"' : '""' ) . ' >';
 		$j=0;
 		
 		foreach($array[$i] as $key => $data) {
 			$data = preg_replace("|($search_text)|Ui" , "<code style=\"background:#ffc516;padding:0 4px;\"><b>$1</b></code>" , htmlspecialchars($data));
-			$table_data .= '<td>'. $data .' &nbsp;</td>';
+			$table_data .= '<td>' . $data . ' &nbsp;</td>';
 			$j++;
 		}
 		
-		if($max<$j)
-		{
+		if ($max < $j) {
 			$max = $j;
 			$max_i = $i;
 		}
-		$table_data .= '</tr>'."\n";
+		
+		$table_data .= '</tr>' . "\n";
 	}
 	
 	unset($data);
@@ -661,10 +661,10 @@ function searchandreplace_table_arrange($array) {
 	
 	$table_head = '<tr>';
 		foreach($data_a as $key => $value) {
-			$table_head .= '<th>'. $key.'</th>';
+			$table_head .= '<th>' . $key.'</th>';
 		}
 			
-	$table_head .= '</tr>'."\n";
+	$table_head .= '</tr>' . "\n";
 	
 	// @abstract printing the table data
 	return '<div class="table_bor">
