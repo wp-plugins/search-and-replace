@@ -48,7 +48,7 @@ The plugin comes with various translations, please refer to the [WordPress Codex
 
 
 == Changelog ==
-= v2.6.2 (09/11/2011)=
+= v2.6.2 (09/11/2011) =
 * change right object for use the plugin also on WP smaller 3.0, include 2.9
 * add function search and replace in all tables of the database - special care!
 
