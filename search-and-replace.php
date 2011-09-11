@@ -817,7 +817,7 @@ function searchandreplace_page() {
 								<td><input class="code" type="text" name="search_text" value="" size="80" /></td>
 							</tr>
 							<tr class="alternate">
-								<th><label for="srall_label"><?php _e('All - search/replace!', FB_SAR_TEXTDOMAIN); ?></label></th>
+								<th><label for="srall_label"><?php _e('All - search/replace - special care!', FB_SAR_TEXTDOMAIN); ?></label></th>
 								<td><input type='radio' name='sall' value='srall' id='srall_label' />
 									<label for="srall_label"><?php _e('field:', FB_SAR_TEXTDOMAIN); ?> <code>*</code> <?php _e('tables:', FB_SAR_TEXTDOMAIN); ?> <code>*</code></label>
 								</td>
