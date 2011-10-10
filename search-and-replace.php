@@ -7,7 +7,7 @@ Plugin URI: http://bueltge.de/wp-suchen-und-ersetzen-de-plugin/114/
 Description: A simple search for find strings in your database and replace the string. 
 Author: Frank B&uuml;ltge
 Author URI: http://bueltge.de/
-Version: 2.6.2
+Version: 2.6.3
 License: GPL
 Donate URI: http://bueltge.de/wunschliste/
 */
@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 Requirements:
 ==============================================================================
-This plugin requires WordPress >= 2.7 and tested with PHP Interpreter >= 5.2.9
+This plugin requires WordPress >= 2.7 and was tested with PHP Interpreter >= 5.3 and WP 3.3
 */
 
 //avoid direct calls to this file, because now WP core and framework has been used
@@ -621,7 +621,7 @@ function searchandreplace_sall($search_text, $replace_text = FALSE) {
 	
 	if ( ! $result_in_tables ) {
 		$myecho = '<p style="color:red;">Sorry, <code>'.
-			$search_text . '</code> ' . 
+			stripslashes_deep( stripslashes_deep( htmlentities2( $search_text ) ) ) . '</code> ' . 
 			__( 'is not found in this Database', FB_SAR_TEXTDOMAIN ) . 
 			'(<code>' . $wpdb->dbname . '</code>)!</p>';
 	}
@@ -738,9 +738,9 @@ function searchandreplace_action() {
 		} else {
 			$myecho .= '<div class="updated fade">';
 			$myecho .= '<p><strong>&raquo; ' . __('Attempting to perform search and replace ...', FB_SAR_TEXTDOMAIN) . '</strong></p>';
-			$myecho .= '<p>&raquo; ' . __('Search', FB_SAR_TEXTDOMAIN) . ' <code>' . $_POST['search_text'] . '</code>';
+			$myecho .= '<p>&raquo; ' . __('Search', FB_SAR_TEXTDOMAIN) . ' <code>' . stripslashes( htmlentities2( $_POST['search_text'] ) ) . '</code>';
 			if ( isset($_POST['replace_text']) )
-				$myecho .= ' ... ' . __('and replace with', FB_SAR_TEXTDOMAIN) . ' <code>' . $_POST['replace_text'] . '</code></p>';
+				$myecho .= ' ... ' . __('and replace with', FB_SAR_TEXTDOMAIN) . ' <code>' . stripslashes( htmlentities2( $_POST['replace_text'] ) ) . '</code></p>';
 			$myecho .= '</div><br class="clear" />';
 			
 			if ( !isset($_POST['replace_text']) )
@@ -817,7 +817,7 @@ function searchandreplace_page() {
 								<td><input class="code" type="text" name="search_text" value="" size="80" /></td>
 							</tr>
 							<tr class="alternate">
-								<th><label for="srall_label"><?php _e('All - search/replace - special care!', FB_SAR_TEXTDOMAIN); ?></label></th>
+								<th><label for="srall_label"><?php _e('All - search/replace!', FB_SAR_TEXTDOMAIN); ?></label></th>
 								<td><input type='radio' name='sall' value='srall' id='srall_label' />
 									<label for="srall_label"><?php _e('field:', FB_SAR_TEXTDOMAIN); ?> <code>*</code> <?php _e('tables:', FB_SAR_TEXTDOMAIN); ?> <code>*</code></label>
 								</td>
