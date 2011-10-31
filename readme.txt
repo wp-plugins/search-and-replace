@@ -39,6 +39,7 @@ You may also be interested in WordPress tips and tricks at [WP Engineer](http://
 * Polish translation by [Bartosz Sobczyk](http://www.brt12.eu "Bartosz Sobczyk")
 * Persian translation by [Mostafa Soufi](http://iran98.org "iran98.org")
 * Danish translation by [GeorgWP](http://wordpress.blogos.dk/s%C3%B8g-efter-downloads/?did=265 "wordpress.blogos.dk")
+* Spanish translation by [Katie and Team](http://myhosting.com/)
 
 = Licence =
 Good news, this plugin is free for everyone! Since it's released under the GPL, you can use it free of charge on your personal or commercial blog. But if you enjoy this plugin, you can thank me and leave a [small donation](http://bueltge.de/wunschliste/ "Wishliste and Donate") for the time I've spent writing and supporting this plugin. And I really don't want to know how many hours of my life this plugin has already eaten ;)
