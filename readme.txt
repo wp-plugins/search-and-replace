@@ -3,7 +3,7 @@ Contributors: Bueltge
 Donate link: http://bueltge.de/wunschliste/
 Tags: database, mysql, search, replace, admin, security
 Requires at least: 1.5
-Tested up to: 3.3-beta3
+Tested up to: 3.3
 Stable tag: 2.6.3
 
 A simple search for find strings in your database and replace the string.
@@ -41,6 +41,7 @@ You may also be interested in WordPress tips and tricks at [WP Engineer](http://
 * Danish translation by [GeorgWP](http://wordpress.blogos.dk/s%C3%B8g-efter-downloads/?did=265 "wordpress.blogos.dk")
 * Spanish translation by [myhosting.com Team](http://myhosting.com/)
 * Belarussian language by [Alexander Ovsov](http://webhostinggeeks.com/science/)
+* Thanks to [Brian Flores](http://www.inmotionhosting.com/) for serbian translation
 
 = Licence =
 Good news, this plugin is free for everyone! Since it's released under the GPL, you can use it free of charge on your personal or commercial blog. But if you enjoy this plugin, you can thank me and leave a [small donation](http://bueltge.de/wunschliste/ "Wishliste and Donate") for the time I've spent writing and supporting this plugin. And I really don't want to know how many hours of my life this plugin has already eaten ;)
