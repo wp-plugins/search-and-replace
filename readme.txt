@@ -42,6 +42,7 @@ You may also be interested in WordPress tips and tricks at [WP Engineer](http://
 * Spanish translation by [myhosting.com Team](http://myhosting.com/)
 * Belarussian language by [Alexander Ovsov](http://webhostinggeeks.com/science/)
 * Thanks to [Brian Flores](http://www.inmotionhosting.com/) for serbian translation
+* Thanks to [Martien van de Griendt](http://www.vandegriendtwebsites.nl) for dutch translation
 
 = Licence =
 Good news, this plugin is free for everyone! Since it's released under the GPL, you can use it free of charge on your personal or commercial blog. But if you enjoy this plugin, you can thank me and leave a [small donation](http://bueltge.de/wunschliste/ "Wishliste and Donate") for the time I've spent writing and supporting this plugin. And I really don't want to know how many hours of my life this plugin has already eaten ;)
