@@ -3,8 +3,8 @@ Contributors: Bueltge
 Donate link: http://bueltge.de/wunschliste/
 Tags: database, mysql, search, replace, admin, security
 Requires at least: 1.5
-Tested up to: 3.4-Beta3
-Stable tag: 2.6.3
+Tested up to: 3.4
+Stable tag: 2.6.4
 
 A simple search for find strings in your database and replace the string.
 
