@@ -61,7 +61,6 @@ The plugin comes with various translations, please refer to the [WordPress Codex
 = v2.6.4 =
 * Fix capability check, if the constant `DISALLOW_FILE_EDIT` ist defined
 
-
 = v2.6.3 (10/10/2011) =
 * filter for return values, html-filter
 * add belarussian language
