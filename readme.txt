@@ -3,7 +3,7 @@ Contributors: Bueltge, inpsyde
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RHWH8VG798CSC
 Tags: database, mysql, search, replace, admin, security
 Requires at least: 1.5
-Tested up to: 3.5-Beta2
+Tested up to: 3.5-RC2
 Stable tag: 2.6.5
 
 A simple search for find strings in your database and replace the string.
@@ -45,6 +45,7 @@ Have a look at the premium plugins in our [market](http://marketpress.com).
 * Romanian language files, thanks to [Alexander Ovsov](http://webhostinggeeks.com/)
 * Belarusian laguage files, thanks to [Alexander Ovsov](http://webhostinggeeks.com/)
 * Lithuanian translation files by [Vincent G](http://www.host1plus.com)
+* Branco, Slovak translation by [WebHostingGeeks](http://webhostinggeeks.com/blog/)
 
 = License =
 Good news, this plugin is free for everyone! Since it's released under the GPL, you can use it free of charge on your personal or commercial blog. But if you enjoy this plugin, you can thank me and leave a [small donation](http://bueltge.de/wunschliste/ "Wishliste and Donate") for the time I've spent writing and supporting this plugin. And I really don't want to know how many hours of my life this plugin has already eaten ;)
