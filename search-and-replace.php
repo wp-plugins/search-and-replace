@@ -563,7 +563,7 @@ function searchandreplace_sall($search_text, $replace_text = FALSE) {
 		$sql = 'select count(*) from ' . $tables[$i]['Tables_in_' . $wpdb->dbname];
 		$res = mysql_query($sql);
 		
-		if (mysql_num_rows($res) > 0) {
+		if ( (int) mysql_num_rows($res) > 0) {
 			//@abstract taking the table data type information
 			$sql = 'desc ' . $tables[$i]['Tables_in_' . $wpdb->dbname]; 
 			$res = mysql_query($sql);
@@ -928,14 +928,14 @@ function searchandreplace_page() {
 								<td colspan="2" style="text-align: center;"><input type='checkbox' name='user_login' id='user_login_label' /></td>
 								<td><label for="user_login_label"><?php _e('field:', FB_SAR_TEXTDOMAIN); ?> <code>user_login</code> <?php _e('and', FB_SAR_TEXTDOMAIN); ?> <code>user_nicename</code><br /><?php _e('table:', FB_SAR_TEXTDOMAIN); ?> <code>_users</code></label></td>
 							</tr>
-							<?php if ($wpdb && mysql_num_rows(mysql_query("SHOW TABLES LIKE '" . $wpdb->prefix . 'terms'."'") ) == 1) { ?>
+							<?php if ($wpdb && @mysql_num_rows(mysql_query("SHOW TABLES LIKE '" . $wpdb->prefix . 'terms'."'") ) == 1) { ?>
 							<tr class="alternate">
 								<th><label for="id_label"><?php _e('ID', FB_SAR_TEXTDOMAIN); ?></label></th>
 								<td colspan="2" style="text-align: center;"><input type='checkbox' name='id' id='id_label' /></td>
 								<td><label for="id_label"><?php _e('field:', FB_SAR_TEXTDOMAIN); ?> <code>ID</code>, <code>post_parent</code>, <code>post_id</code>, <code>object_id</code> <?php _e('and', FB_SAR_TEXTDOMAIN); ?> <code>comments</code><br /><?php _e('table:', FB_SAR_TEXTDOMAIN); ?> <code>_posts</code>, <code>_postmeta</code>, <code>_term_relationships</code> <?php _e('and', FB_SAR_TEXTDOMAIN); ?> <code>_comment_post_ID</code></label></td>
 							</tr>
 							<?php } ?>
-							<?php if ($wpdb && mysql_num_rows(mysql_query("SHOW TABLES LIKE '" . $wpdb->prefix . 'signups'."'") ) == 1) { ?>
+							<?php if ($wpdb && @mysql_num_rows(mysql_query("SHOW TABLES LIKE '" . $wpdb->prefix . 'signups'."'") ) == 1) { ?>
 							<tr class="alternate">
 								<th><label for="signups_label"><?php _e('Signups', FB_SAR_TEXTDOMAIN); ?></label></th>
 								<td colspan="2" style="text-align: center;"><input type='checkbox' name='signups' id='signups_label' /></td>
