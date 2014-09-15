@@ -40,7 +40,7 @@ The plugin comes with various translations, please refer to the [WordPress Codex
 
 
 == Changelog ==
-= v1.7.0 (2014-09-14) =
+= v2.7.0 (2014-09-14) =
 * Exclude serialized data from replace function (maybe we reduce the support)
 * Add hint, if is serialized data on the result table
 * Fix to see also the result case sensitive
