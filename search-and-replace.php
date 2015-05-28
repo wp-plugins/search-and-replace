@@ -545,9 +545,13 @@ function searchandreplace_sall( $search_text, $replace_text = FALSE ) {
 	}
 
 	$search_text = esc_sql( $search_text ); # this appears to be escaped already
+	$search_text = stripslashes_deep( $search_text );
+
 	if ( $replace_text ) {
 		$replace_text = esc_sql( $replace_text );
 	} # this appears to be escaped already
+	$replace_text = stripslashes_deep( $replace_text );
+
 	$result_in_tables = 0;
 
 	$myecho = '
