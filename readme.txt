@@ -42,6 +42,7 @@ The plugin comes with various translations, please refer to the [WordPress Codex
 == Changelog ==
 = v1.7.1 (2015-05-28) =
 * Fix for changes on database collate since WordPress version 4.2
+* Fix to reduce backslashes in search and replace string
 
 = v1.7.0 (2014-09-14) =
 * Exclude serialized data from replace function (maybe we reduce the support)
