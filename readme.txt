@@ -23,7 +23,7 @@ Some recommendations:
 
 
 == Changelog ==
-= End of Support 07/2105 =
+= End of Support 07/2015 =
 * No longer development, maintenance
 * Changes on the database structure of WP core is not easy to maintenance with this plugin
 * A lot of field in inside the database are in serilized data fields, not handle vie sql default
