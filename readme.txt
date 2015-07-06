@@ -3,43 +3,32 @@ Contributors: Bueltge, inpsyde
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RHWH8VG798CSC
 Tags: database, mysql, search, replace, admin, security
 Requires at least: 3.0
-Tested up to: 4.2.2
-Stable tag: 2.7.1
+Tested up to: 4.1.0
+Stable tag: trunk
 License: GPLv2+
 
-A simple search for find strings in your database and replace the string.
+The Search and Replace plugin is no longer under maintenance.
 
 == Description ==
-A simple search for find strings in your database and replace the string. You can search in ID, post-content, GUID, titel, excerpt, meta-data, comments, comment-author, comment-e-mail, comment-url, tags/categories and categories-description. It is possible to replace the user-ID in all tables and the user-login.
 
-"Search and Replace" Originalplugin ist von [Mark Cunningham](http://thedeadone.net/ "Mark Cunningham") and was advanced (comments and comment-author) by [Gonahkar](http://www.gonahkar.com/ "Gonahkar"). Much more enhanced and maintained by [Frank Bültge](http://bueltge.de) and current version is also maintained by Ron Guerin <ron@vnetworx.net>.
+**The Search and Replace plugin is no longer under maintenance.**
 
-== Installation ==
-= Requirements =
-* WordPress version 3.0 and later (tested at 3.5-Beta2 and 3.3.2)
+The plugin have a long history. But the end of life is be reached.
+It is not helpful to maintain the plugin, a refactoring, rewrite is necassary. I find no helping hands in the community and it give newer plugins.
 
-= Installation =
-1. Unpack the download-package
-1. Upload search-and-replace folder to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Got to Tools -> Search/Replace
+Some recommendations:
 
-== Screenshots ==
-1. Functions in WordPress 2.7 beta
-1. The search for an string in WordPress 3.1-RC2
-
-== Other Notes ==
-= Acknowledgements =
-All existing translation files need to be updated for Search and Replace 2.6.6, please feel free to send me your translation file.
-
-= License =
-Good news, this plugin is free for everyone! Since it's released under the GPL, you can use it free of charge on your personal or commercial blog. But if you enjoy this plugin, you can thank me and leave a [small donation](http://bueltge.de/wunschliste/ "Wishliste and Donate") for the time I've spent writing and supporting this plugin. And I really don't want to know how many hours of my life this plugin has already eaten ;)
-
-= Translations =
-The plugin comes with various translations, please refer to the [WordPress Codex](http://codex.wordpress.org/Installing_WordPress_in_Your_Language "Installing WordPress in Your Language") for more information about activating the translation. If you want to help to translate the plugin to your language, please have a look at the .pot file which contains all definitions and may be used with a [gettext](http://www.gnu.org/software/gettext/) editor like [Poedit](http://www.poedit.net/) (Windows) or plugin for WordPress [Localization](http://wordpress.org/extend/plugins/codestyling-localization/).
+ * [Search-Replace-DB](https://github.com/interconnectit/Search-Replace-DB)
+ * [Better Search Replace](https://wordpress.org/plugins/better-search-replace/)
 
 
 == Changelog ==
+= End of Support 07/2105 =
+* No longer development, maintenance
+* Changes on the database structure of WP core is not easy to maintenance with this plugin
+* A lot of field in inside the database are in serilized data fields, not handle vie sql default
+* rewrite id much effort and other plugins are done, helpful
+
 = v2.7.1 (2015-05-28) =
 * Fix for changes on database collate since WordPress version 4.2
 * Fix to reduce backslashes in search and replace string
